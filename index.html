@@ -10,163 +10,167 @@
         :root { --bg: #F9F8F6; --primary: #333; --accent: #C88F8F; --sub: #999; --line: #EAE8E4; --box-bg: #FCFBFA; }
         body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); margin: 0; color: var(--primary); -webkit-font-smoothing: antialiased; }
         
-        /* 基礎排版 (同之前妳喜歡的版本) */
+        /* 基礎排版 (復刻截圖) */
         .app-header { text-align: center; padding: 30px 20px 0; background: var(--bg); }
+        .header-top { font-size: 10px; letter-spacing: 3px; color: var(--sub); text-transform: uppercase; margin-bottom: 5px; }
         .header-title { font-family: 'Noto Serif TC', serif; font-size: 1.6rem; font-weight: 600; }
         .weather-scroll { padding: 15px 25px; display: flex; overflow-x: auto; gap: 20px; scrollbar-width: none; }
         .weather-scroll::-webkit-scrollbar { display: none; }
+
         .container { padding: 30px 20px 180px; }
         .timeline { position: relative; border-left: 1px solid var(--line); margin-left: 65px; }
         .item { position: relative; padding-left: 25px; margin-bottom: 50px; cursor: pointer; }
         .item-time { position: absolute; left: -85px; top: 0; font-family: 'Noto Serif TC', serif; font-size: 1.3rem; }
         .item-time::after { content: '°'; font-size: 12px; vertical-align: super; }
-        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.25rem; font-weight: 600; margin-bottom: 5px; }
+        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 5px; }
         .stamp { border: 1.5px solid var(--accent); color: var(--accent); padding: 1px 5px; font-size: 9px; border-radius: 4px; transform: rotate(-10deg); display: inline-block; margin-left: 10px; font-weight: bold; }
 
-        /* 導遊字卡 Modal (復刻截圖設計) */
+        /* 導遊字卡 Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; z-index: 3000; align-items: flex-end; backdrop-filter: blur(8px); }
         .modal-content { background: white; width: 100%; max-height: 90%; border-radius: 30px 30px 0 0; padding: 30px 20px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         .close-btn { position: absolute; top: 20px; right: 20px; font-size: 26px; color: #CCC; }
 
-        /* 頂部預約區 */
-        .ticket-header { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-        .ticket-label { border: 1px solid var(--accent); color: var(--accent); padding: 2px 8px; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
-        .ticket-time { color: var(--sub); font-size: 13px; font-family: 'Noto Serif TC', serif; }
+        /* 內容區塊 */
+        .section-title { font-size: 11px; color: var(--sub); letter-spacing: 1px; margin: 25px 0 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #F0F0F0; padding-bottom: 5px; }
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .info-item { background: var(--box-bg); border: 1px solid #EEE; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .info-main { font-size: 14px; font-weight: 600; color: #333; }
+        .info-sub { font-size: 11px; color: var(--sub); }
 
-        /* 指差會話/菜單 */
-        .section-title { font-size: 11px; color: var(--sub); letter-spacing: 1px; margin: 25px 0 12px; display: flex; align-items: center; gap: 8px; }
-        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .menu-item { background: var(--box-bg); border: 1px solid #EEE; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .menu-zh { font-size: 15px; font-weight: 500; }
-        .menu-jp { font-size: 13px; color: var(--sub); }
+        .blogger-tip { background: #FFF9F9; border-radius: 12px; padding: 15px; border-left: 4px solid var(--accent); margin: 15px 0; font-size: 13px; line-height: 1.6; color: #555; }
+        .blogger-tip b { color: var(--accent); }
 
-        /* 導遊補充故事 */
-        .story-box { border-left: 1px solid #EEE; padding-left: 20px; margin-left: 5px; }
-        .story-item { position: relative; margin-bottom: 25px; font-size: 14px; color: #555; line-height: 1.8; }
-        .story-item::before { content: ''; position: absolute; left: -24px; top: 10px; width: 8px; height: 1px; background: #EEE; }
-        .story-tag { font-weight: 600; color: #333; }
-
+        .btn-map { display: block; background: #333; color: white; text-align: center; padding: 18px; border-radius: 15px; text-decoration: none; margin-top: 30px; font-weight: 600; }
+        
         /* 底部焦點卡片 */
         .focus-card { position: fixed; bottom: 30px; left: 15px; right: 15px; background: white; border-radius: 20px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; z-index: 2000; border: 1px solid #F0F0F0; }
+        .focus-main { flex: 1; border-right: 1px solid #EEE; padding-right: 15px; }
+        .focus-time { font-family: 'Noto Serif TC', serif; font-size: 1.3rem; }
     </style>
 </head>
 <body>
 
     <div class="app-header">
-        <div class="header-top">FAMILY TRIP</div>
-        <div class="header-title">大阪旅行 <span style="font-size: 12px; color: var(--sub); border: 1px solid #DDD; padding: 2px 8px; border-radius: 20px; font-weight: normal;">2026</span></div>
+        <div class="header-top">OSAKA TRIP 2026</div>
+        <div class="header-title">小陳旅行社 · 大阪手帖</div>
     </div>
 
     <div class="weather-scroll" id="hourlyWeather">讀取中...</div>
 
     <div class="container">
         <div class="timeline">
-            <div class="item" onclick="showGuide('shopping')">
+            <div class="item" onclick="showGuide('hotel')">
+                <div class="item-time">12:00</div>
+                <div class="item-content">
+                    <span style="font-size:9px; color:var(--sub);">🏨 HOTEL</span>
+                    <h2 class="item-title">日居大正一号館</h2>
+                    <p style="font-size:12px; color:#999;">大正站步行 · 拍照回傳提醒</p>
+                </div>
+            </div>
+
+            <div class="item" onclick="showGuide('shackshack')">
                 <div class="item-time">14:00</div>
                 <div class="item-content">
-                    <span style="font-size:9px; color:var(--sub);">🛍️ SHOPPING</span>
-                    <h2 class="item-title">大丸 & PARCO 攻略</h2>
-                    <p style="font-size:12px; color:#999;">百貨空橋、動漫天堂與美妝必買...</p>
+                    <span style="font-size:9px; color:var(--sub);">🍔 LUNCH & SHOP</span>
+                    <h2 class="item-title">Shake Shack & 百貨攻略</h2>
+                    <p style="font-size:12px; color:#999;">大丸百貨午餐 · 寶可夢/吉伊卡哇清單</p>
                 </div>
             </div>
 
             <div class="item" onclick="showGuide('dinner')">
                 <div class="item-time">17:30</div>
                 <div class="item-content">
-                    <span style="font-size:9px; color:var(--sub);">🍴 FOOD</span>
+                    <span style="font-size:9px; color:var(--sub);">🍴 DINNER</span>
                     <h2 class="item-title">蔬菜串燒 <span class="stamp">預約済</span></h2>
-                    <p style="font-size:12px; color:#999;">預約完成 · 6位大人</p>
+                    <p style="font-size:12px; color:#999;">Naruto ya · 6人預約完成</p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="focus-card">
+        <div class="focus-main">
+            <div class="focus-time">17:30 <span style="font-size:10px; background:#F5F5F5; padding:2px 6px; border-radius:4px; color:#999; font-weight:normal; margin-left:8px;">行程預覽</span></div>
+            <div style="font-size:14px; font-weight:600; margin-top:5px;">蔬菜串燒 Naruto ya</div>
+        </div>
+        <div style="flex: 0 0 80px; text-align: center; padding-left:10px;">
+            <div style="font-size:10px; color:#999;">下個地點</div>
+            <div style="font-size:14px; color:#333; font-weight:600;">大正住宿</div>
         </div>
     </div>
 
     <div id="modal" class="modal-overlay" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">×</span>
-            
-            <div id="m-ticket" class="ticket-header" style="display:none;">
-                <div class="ticket-label">FOOD</div>
-                <div class="ticket-time">🕒 <span id="m-res-time"></span></div>
-            </div>
+            <h2 id="m-title" style="font-family:'Noto Serif TC', serif; font-size:1.5rem; margin-bottom:5px;"></h2>
+            <p id="m-address" style="font-size:12px; color:var(--sub); margin-bottom:15px;"></p>
 
-            <h2 id="m-title" style="font-family:'Noto Serif TC', serif; font-size:1.5rem; margin:10px 0;"></h2>
-            <p id="m-address" style="font-size:12px; color:var(--sub); margin-bottom:20px;"></p>
+            <div class="blogger-tip" id="m-blogger-tip"></div>
 
-            <div id="m-menu-section">
-                <div class="section-title">文 指差し会話 (POINT & SPEAK)</div>
-                <div id="m-menu-grid" class="menu-grid"></div>
-            </div>
+            <div class="section-title">導遊推薦清單 (TOUR GUIDE LIST)</div>
+            <div id="m-info-grid" class="info-grid"></div>
 
-            <div class="section-title">ⓘ 關於此處 (ABOUT)</div>
-            <div class="story-box" id="m-story"></div>
-
-            <a id="m-map" href="#" style="display:block; background:#333; color:white; text-align:center; padding:18px; border-radius:15px; text-decoration:none; margin-top:30px; font-weight:600;">📍 開啟 Google Maps 導航</a>
+            <a id="m-map" href="#" class="btn-map">📍 開啟 Google Maps 導航</a>
         </div>
     </div>
 
     <script>
         const guideData = {
-            shopping: {
-                title: "大丸 & PARCO 購物攻略",
-                address: "大阪市中央區心齋橋筋1-7-1",
-                resTime: null,
-                menu: [
-                    { zh: "吉伊卡哇Land (6F)", jp: "ちいかわらんど" },
-                    { zh: "寶可夢中心 (9F)", jp: "ポケモンセンター" },
-                    { zh: "3Coins 雜貨 (B1F)", jp: "スリーコインズ" }
+            hotel: {
+                title: "日居大正一号館",
+                address: "大阪市大正區三軒家西1丁目9-13",
+                bloggerTip: "<b>導遊小撇步：</b>大正站下車走幾分鐘就到。<b>6人行李很多</b>，記得按照房東要求整齊放在玄關，並且拍一張包含玄關的照片傳給房東，才算完成報到喔！",
+                list: [
+                    { main: "行李擺放照片", sub: "務必回傳給房東確認" },
+                    { main: "室內禁菸提醒", sub: "日本民宿管理嚴格請注意" }
                 ],
-                stories: [
-                    { tag: "動漫控必看", text: "PARCO 6樓是動漫天堂，除了吉伊卡哇，還有 CAPCOM 和刀劍亂舞。記得跟巨大的瑪利歐合照！" },
-                    { tag: "逛街秘訣", text: "大丸百貨和 PARCO 在 2 樓到 10 樓都有空橋互通，不用下樓到街道，可以一路逛到底。" }
+                map: "https://goo.gl/maps/A6p8i3vF6u65jD6b7"
+            },
+            shackshack: {
+                title: "Shake Shack & 百貨攻略",
+                address: "大丸心齋橋 1F / PARCO 6F",
+                bloggerTip: "<b>導遊小撇步：</b>Shake Shack 就在大丸一樓門口。吃飽後直接坐電梯上 <b>大丸 9F 看寶可夢</b>，再走空橋去 <b>PARCO 6F 找吉伊卡哇</b>。這兩棟樓中間有空橋，可以避暑不用走外面！",
+                list: [
+                    { main: "ShackBurger", sub: "經典起司漢堡，台灣吃不到的味道" },
+                    { main: "大阪限定奶昔 (Shake)", sub: "地區限定口味，拍照最吸睛" },
+                    { main: "吉伊卡哇Land (PARCO 6F)", sub: "年輕女生瘋搶區，限定品極多" },
+                    { main: "寶可夢中心 (大丸 9F)", sub: "超大門市，適合買伴手禮" },
+                    { main: "3Coins雜貨 (PARCO B1F)", sub: "CP值最高！全店300日圓起" }
                 ],
                 map: "https://app.goo.gl/xS7D"
             },
             dinner: {
                 title: "蔬菜串燒 Naruto ya",
-                address: "難波千日前區",
-                resTime: "17:30 (已預約 6位)",
-                menu: [
-                    { zh: "生菜豬肉捲 (必點)", jp: "レタス豚巻き" },
-                    { zh: "半熟蛋捲肉", jp: "半熟卵の肉巻き" },
-                    { zh: "酪梨豬肉捲", jp: "アボカド豚巻き" }
-                ],
-                stories: [
-                    { tag: "導遊真心推", text: "這家店主打清爽不油膩的蔬菜捲。生菜捲豬肉咬下去會有清脆的聲音，非常適合姊妹聚餐拍照。" },
-                    { tag: "預約提醒", text: "現場候位通常要一小時以上，我們已經預約好 17:30，請旅伴準時在門口集合喔！" }
+                address: "大阪府大阪市中央区難波千日前",
+                bloggerTip: "<b>導遊小撇步：</b>這家是女孩團首選！<b>生菜肉捲 (レタス巻き)</b> 是部落客一致推崇的人氣 No.1。我們 6 人已預約好，請準時 17:30 報到。",
+                list: [
+                    { main: "生菜豬肉捲", sub: "必點！口感清爽酥脆" },
+                    { main: "半熟卵肉捲", sub: "視覺跟味覺的雙重享受" },
+                    { main: "酪梨豬肉捲", sub: "女孩最愛，口感像奶油一樣滑順" }
                 ],
                 map: "https://app.goo.gl/zL6v7"
             }
         };
 
         function showGuide(key) {
-            const data = guideData[key];
-            document.getElementById('m-title').innerText = data.title;
-            document.getElementById('m-address').innerText = "📍 " + data.address;
-            
-            // 預約區
-            const ticket = document.getElementById('m-ticket');
-            if(data.resTime) {
-                ticket.style.display = 'flex';
-                document.getElementById('m-res-time').innerText = data.resTime;
-            } else { ticket.style.display = 'none'; }
-
-            // 菜單區
-            const grid = document.getElementById('m-menu-grid');
-            grid.innerHTML = data.menu.map(i => `<div class="menu-item"><span class="menu-zh">${i.zh}</span><span class="menu-jp">${i.jp}</span></div>`).join('');
-
-            // 故事區
-            const story = document.getElementById('m-story');
-            story.innerHTML = data.stories.map(s => `<div class="story-item"><span class="story-tag">【${s.tag}】</span>${s.text}</div>`).join('');
-
-            document.getElementById('m-map').href = data.map;
+            const d = guideData[key];
+            document.getElementById('m-title').innerText = d.title;
+            document.getElementById('m-address').innerText = "📍 " + d.address;
+            document.getElementById('m-blogger-tip').innerHTML = d.bloggerTip;
+            const grid = document.getElementById('m-info-grid');
+            grid.innerHTML = d.list.map(i => `
+                <div class="info-item">
+                    <div><div class="info-main">${i.main}</div><div class="info-sub">${i.sub}</div></div>
+                    <div style="font-size:12px; color:#CCC;">→</div>
+                </div>
+            `).join('');
+            document.getElementById('m-map').href = d.map;
             document.getElementById('modal').style.display = 'flex';
         }
 
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
-        // 天氣 API (略，同之前版本)
         async function fetchWeather() {
             const scroll = document.getElementById('hourlyWeather');
             const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=34.69&longitude=135.50&hourly=temperature_2m,weathercode&timezone=Asia%2FTokyo`);
@@ -176,7 +180,7 @@
                 const t = data.hourly.time[i].split('T')[1];
                 const temp = Math.round(data.hourly.temperature_2m[i]);
                 const code = data.hourly.weathercode[i];
-                const icon = code <= 3 ? '☀️' : '☁️';
+                const icon = code <= 3 ? '🌤️' : '☁️';
                 scroll.innerHTML += `<div style="text-align:center; min-width:45px;"><div style="font-size:10px; color:#999;">${t}</div><div style="font-size:1.2rem; margin:5px 0;">${icon}</div><div style="font-size:13px; font-weight:600;">${temp}°</div></div>`;
             }
         }
