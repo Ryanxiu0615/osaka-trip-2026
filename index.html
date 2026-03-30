@@ -10,13 +10,13 @@
         :root { --bg: #F9F8F6; --primary: #333; --accent: #C88F8F; --sub: #999; --line: #EAE8E4; --box-bg: #FCFBFA; }
         body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); margin: 0; color: var(--primary); -webkit-font-smoothing: antialiased; }
         
-        /* 頂部標題 */
-        .app-header { text-align: center; padding: 30px 20px 0; background: var(--bg); }
+        /* 標題區 */
+        .app-header { text-align: center; padding: 35px 20px 0; background: var(--bg); }
         .header-top { font-size: 10px; letter-spacing: 3px; color: var(--sub); text-transform: uppercase; margin-bottom: 5px; }
         .header-title { font-family: 'Noto Serif TC', serif; font-size: 1.6rem; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; }
-        .header-year { font-size: 12px; color: var(--sub); border: 1px solid #DDD; padding: 2px 8px; border-radius: 20px; font-weight: normal; }
+        .header-year { font-size: 11px; color: var(--sub); border: 1px solid #DDD; padding: 1px 7px; border-radius: 20px; font-weight: normal; }
 
-        /* 即時天氣條 */
+        /* 天氣條 */
         .weather-scroll { padding: 15px 25px; display: flex; overflow-x: auto; gap: 20px; scrollbar-width: none; background: var(--bg); }
         .weather-scroll::-webkit-scrollbar { display: none; }
         .w-item { text-align: center; min-width: 45px; }
@@ -27,47 +27,39 @@
         .date-item.active { color: var(--primary); font-weight: 600; position: relative; }
         .date-item.active::after { content: ''; position: absolute; bottom: -5px; left: 50%; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; transform: translateX(-50%); }
 
-        /* 行程容器 */
+        /* 時間軸項目 */
         .container { padding: 30px 20px 180px; }
         .timeline { position: relative; border-left: 1px solid var(--line); margin-left: 65px; }
-        
-        /* 行程項目 */
         .item { position: relative; padding-left: 25px; margin-bottom: 50px; cursor: pointer; }
         .item-time { position: absolute; left: -85px; top: 0; font-family: 'Noto Serif TC', serif; font-size: 1.3rem; color: var(--primary); }
         .item-time::after { content: '°'; font-size: 12px; vertical-align: super; margin-left: 2px; color: var(--sub); }
-        
-        .item-content { margin-top: 4px; }
-        .item-label { font-size: 9px; color: var(--sub); letter-spacing: 1px; display: flex; align-items: center; gap: 5px; margin-bottom: 6px; text-transform: uppercase; }
-        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; color: #222; }
-        .item-desc { font-size: 13px; color: #888; line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .item-label { font-size: 9px; color: var(--sub); letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase; display: block; }
+        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.2rem; font-weight: 600; }
+        .stamp { border: 1.5px solid var(--accent); color: var(--accent); padding: 1px 5px; font-size: 9px; border-radius: 4px; transform: rotate(-10deg); display: inline-block; margin-left: 10px; font-weight: bold; }
 
-        .stamp { border: 1.5px solid #C88F8F; color: #C88F8F; padding: 1px 5px; font-size: 9px; border-radius: 4px; transform: rotate(-10deg); display: inline-block; margin-left: 10px; font-weight: bold; }
-
-        /* 底部焦點卡片 */
-        .focus-card { position: fixed; bottom: 30px; left: 15px; right: 15px; background: white; border-radius: 20px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; z-index: 2000; border: 1px solid #F0F0F0; }
-        .focus-main { flex: 1; border-right: 1px solid #EEE; padding-right: 15px; }
-        .focus-time { font-family: 'Noto Serif TC', serif; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
-        .focus-tag { background: #F5F5F5; font-size: 10px; padding: 2px 6px; border-radius: 4px; color: #999; font-weight: normal; }
-        .focus-title { font-size: 14px; font-weight: 600; margin-top: 5px; }
-
-        /* 導遊字卡 Modal */
+        /* 導遊 Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; z-index: 3000; align-items: flex-end; backdrop-filter: blur(8px); }
-        .modal-content { background: white; width: 100%; max-height: 90%; border-radius: 30px 30px 0 0; padding: 35px 20px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease; }
+        .modal-content { background: white; width: 100%; max-height: 90%; border-radius: 30px 30px 0 0; padding: 35px 25px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         .close-btn { position: absolute; top: 20px; right: 20px; font-size: 26px; color: #CCC; cursor: pointer; }
         
+        /* 導遊內容區 */
         .blogger-tip { background: #FFF9F9; border-radius: 12px; padding: 15px; border-left: 4px solid var(--accent); margin: 15px 0; font-size: 13px; line-height: 1.6; color: #555; }
+        .blogger-tip b { color: var(--accent); font-weight: 700; }
         .info-item { background: var(--box-bg); border: 1px solid #F0F0F0; padding: 15px; border-radius: 12px; margin-bottom: 10px; }
         .info-main { font-size: 14px; font-weight: 600; color: #333; }
-        .info-sub { font-size: 11px; color: var(--sub); margin-top: 2px; }
+        .info-sub { font-size: 11px; color: var(--sub); margin-top: 3px; }
         .btn-map { display: block; background: #333; color: white; text-align: center; padding: 18px; border-radius: 15px; text-decoration: none; margin-top: 25px; font-weight: 600; }
+
+        /* 底部焦點卡片 */
+        .focus-card { position: fixed; bottom: 30px; left: 15px; right: 15px; background: white; border-radius: 20px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; z-index: 2000; border: 1px solid #F0F0F0; }
     </style>
 </head>
 <body>
 
     <div class="app-header">
-        <div class="header-top">FAMILY TRIP</div>
-        <div class="header-title">大阪旅行 <span class="header-year">2026</span></div>
+        <div class="header-top">OSAKA TRIP</div>
+        <div class="header-title">大阪五天四夜 <span class="header-year">2026</span></div>
     </div>
 
     <div class="weather-scroll" id="hourlyWeather">讀取中...</div>
@@ -85,9 +77,9 @@
     </div>
 
     <div class="focus-card">
-        <div class="focus-main">
-            <div class="focus-time">12:00 <span class="focus-tag">下個行程</span></div>
-            <div class="focus-title">午餐：Shake Shack 漢堡</div>
+        <div style="flex:1; border-right:1px solid #EEE; padding-right:15px;">
+            <div style="font-family:'Noto Serif TC', serif; font-size:1.35rem;">12:00 <span style="font-size:10px; color:#999; margin-left:8px; font-weight:normal;">NEXT</span></div>
+            <div style="font-size:14px; font-weight:600; margin-top:5px;">午餐：Shake Shack 漢堡</div>
         </div>
         <div style="flex:0 0 80px; text-align:center; padding-left:10px;">
             <div style="font-size:10px; color:#999;">地點</div>
@@ -100,9 +92,8 @@
             <span class="close-btn" onclick="closeModal()">×</span>
             <div style="font-size:10px; color:var(--accent); font-weight:700; letter-spacing:1px;" id="m-category"></div>
             <h2 id="m-title" style="font-family:'Noto Serif TC', serif; font-size:1.5rem; margin:10px 0;"></h2>
-            <p id="m-address" style="font-size:12px; color:var(--sub); margin-bottom:10px;"></p>
             <div class="blogger-tip" id="m-blogger-tip"></div>
-            <div style="font-size:11px; color:var(--sub); border-bottom:1px solid #F0F0F0; padding-bottom:5px; margin:20px 0 12px;">導遊深度攻略 (INSIDER GUIDE)</div>
+            <div style="font-size:11px; color:var(--sub); border-bottom:1px solid #F0F0F0; padding-bottom:5px; margin:20px 0 12px;">導遊深度建議 (INSIDER TIPS)</div>
             <div id="m-info-grid"></div>
             <a id="m-map" href="#" class="btn-map">📍 開啟 Google Maps 導航</a>
         </div>
@@ -111,45 +102,47 @@
     <script>
         const guideData = {
             flight: {
-                category: "FLIGHT", title: "出發 (IT210)", address: "桃園 T2 ⭢ 關西 T1",
-                bloggerTip: "<b>導遊叮嚀：</b>IT210 預計 10:24 抵達。下機後請快速移動至入境審查，關西機場 4 月份觀光客較多，排隊可能需要 40-60 分鐘。",
+                category: "FLIGHT", title: "星宇航空 IT210", 
+                bloggerTip: "<b>導遊叮嚀：</b>IT210 預計 10:24 抵達。如果是搭乘星宇，關西機場 T1 入境後直接左轉二樓就是南海電鐵，非常快速！",
                 list: [
-                    { main: "起飛時間", sub: "06:40 (台北桃園)" },
-                    { main: "抵達時間", sub: "10:24 (大阪關西)" }
+                    { main: "入境攻略", sub: "建議下機後快步移動，關西機場入境排隊人潮極多" },
+                    { main: "VJW 截圖", sub: "記得提前準備好 Visit Japan Web 入境 QR Code" }
                 ], map: ""
             },
             lunch: {
-                category: "FOOD", title: "Shake Shack 漢堡", address: "大丸心齋橋店 1F",
-                bloggerTip: "<b>導遊小撇步：</b>這家店位置極佳，推薦點<b>心齋橋限定奶昔</b>。6 人團體建議先找好戶外或大桌區，點完餐後再分頭去逛逛大丸一樓的美妝櫃。",
+                category: "FOOD", title: "午餐：Shake Shack", 
+                bloggerTip: "<b>導遊私藏：</b>除了經典漢堡，大丸店有推出大阪限定的<b>『心齋橋奶昔』</b>。如果是 6 人團，一樓座位區較擁擠，可考慮外帶去旁邊的小桌區吃，或是分兩桌坐。",
                 list: [
-                    { main: "ShackBurger", sub: "經典必點，肉質厚實多汁" },
-                    { main: "Umeda De-Shake", sub: "大阪門市限定奶昔口味" }
+                    { main: "ShackBurger", sub: "招牌安格斯牛肉起司堡" },
+                    { main: "心齋橋限定奶昔", sub: "只有這間分店才喝得到的限定口味" }
+                ], map: "https://app.goo.gl/xS7D"
+            },
+            shopping: {
+                category: "SHOPPING", title: "大丸百貨 & PARCO 攻略", 
+                bloggerTip: "<b>重要退稅陷阱：</b>大丸與 PARCO 雖然連通，但<b>退稅是分開辦理的！</b>在大丸買的要去大丸 4F，PARCO 買的則是在 PARCO 櫃位或指定櫃檯，不能合併計算喔！",
+                list: [
+                    { main: "Bâton d'or (大丸 B1)", sub: "台灣人瘋搶！Pocky 界的愛馬仕，必買伴手禮" },
+                    { main: "WPC 傘 (PARCO 5F)", sub: "極致輕量遮陽傘，日雜模特兒人手一支" },
+                    { main: "吉伊卡哇 Land (PARCO 6F)", sub: "全大阪最紅，有限購規定，建議先衝" },
+                    { main: "空橋撇步", sub: "兩館 2F、7F、10F 都有連通橋，逛累了隨時換棟" }
                 ], map: "https://app.goo.gl/xS7D"
             },
             hotel: {
-                category: "HOTEL", title: "日居大正一号館", address: "大阪市大正區三軒家西1丁目",
-                bloggerTip: "<b>導遊補充：</b>大正站下車後行李多可搭計程車或步行 8 分鐘。<b>民宿進門後務必拍一張玄關全景照</b>傳給房東確認，這是他們的入住規範喔！",
+                category: "HOTEL", title: "民宿：日居大正一号館", 
+                bloggerTip: "<b>導遊在地推薦：</b>大正站出口就有<b>大國藥妝</b>（比心齋橋便宜！）。附近還有<b>『Tugboat Taisho』</b>，晚上這組貨櫃市集在河邊非常漂亮，適合姊妹喝點調酒、吃烤肉。",
                 list: [
-                    { main: "入住拍照提醒", sub: "行李擺放照片回傳房東" },
-                    { main: "LIFE 超市大正店", sub: "晚上回民宿前買草莓與零食的好地方" }
+                    { main: "大正大國藥妝", sub: "就在車站出口，建議回民宿前順手補貨免排隊" },
+                    { main: "Tugboat Taisho", sub: "超熱門水上貨櫃市集，拍照聖地" },
+                    { main: "入住拍照", sub: "行李整齊放置玄關後拍照傳給房東確認" }
                 ], map: "https://goo.gl/maps/A6p8i3vF6u65jD6b7"
-            },
-            shopping: {
-                category: "SHOPPING", title: "商圈攻略：大丸 & PARCO", address: "心齋橋商圈",
-                bloggerTip: "<b>導遊秘技：</b>大丸 9F 寶可夢中心跟 PARCO 6F 吉伊卡哇有空橋連通。PARCO 5F 有 <b>WPC 傘專賣店</b>，女生日本行必逛。退稅記得帶護照去大丸 4F 辦理。",
-                list: [
-                    { main: "吉伊卡哇Land (PARCO 6F)", sub: "全大阪最齊全，可愛瘋掉" },
-                    { main: "寶可夢中心 (大丸 9F)", sub: "必買大阪限定款皮卡丘" },
-                    { main: "WPC 輕量傘 (PARCO 5F)", sub: "精緻好帶，台灣人瘋搶" }
-                ], map: "https://app.goo.gl/xS7D"
             }
         };
 
         const timeline = [
-            { time: "06:40", title: "出發 (IT210)", key: "flight", label: "FLIGHT" },
+            { time: "06:40", title: "星宇 IT210 出發", key: "flight", label: "FLIGHT" },
             { time: "12:00", title: "午餐：Shake Shack", key: "lunch", label: "FOOD" },
-            { time: "14:00", title: "民宿入住", key: "hotel", label: "HOTEL" },
-            { time: "15:30", title: "大丸 & PARCO 購物", key: "shopping", label: "SHOPPING" }
+            { time: "14:00", title: "百貨商圈深度逛", key: "shopping", label: "SHOPPING" },
+            { time: "18:00", title: "抵達大正民宿", key: "hotel", label: "ACCOMMODATION" }
         ];
 
         function renderTimeline() {
@@ -158,7 +151,7 @@
                     <div class="item-time">${i.time}</div>
                     <div class="item-content">
                         <span class="item-label">${i.label}</span>
-                        <h2 class="item-title">${i.title} ${i.key==='dinner'?'<span class="stamp">預約済</span>':''}</h2>
+                        <h2 class="item-title">${i.title}</h2>
                     </div>
                 </div>
             `).join('');
@@ -168,7 +161,6 @@
             const d = guideData[key];
             document.getElementById('m-category').innerText = d.category;
             document.getElementById('m-title').innerText = d.title;
-            document.getElementById('m-address').innerText = "📍 " + d.address;
             document.getElementById('m-blogger-tip').innerHTML = d.bloggerTip;
             document.getElementById('m-info-grid').innerHTML = d.list.map(i => `
                 <div class="info-item">
@@ -191,7 +183,7 @@
             for (let i = 0; i < 12; i++) {
                 const t = data.hourly.time[i].split('T')[1];
                 const temp = Math.round(data.hourly.temperature_2m[i]);
-                scroll.innerHTML += `<div class="w-item"><div class="w-time">${t}</div><div style="font-size:1.2rem; margin:5px 0;">🌤️</div><div class="w-temp">${temp}°</div></div>`;
+                scroll.innerHTML += `<div class="w-item"><div style="font-size:10px; color:#999;">${t}</div><div style="font-size:1.2rem; margin:5px 0;">🌤️</div><div style="font-size:13px; font-weight:600;">${temp}°</div></div>`;
             }
         }
         renderTimeline();
