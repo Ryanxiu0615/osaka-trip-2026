@@ -94,4 +94,68 @@
                     <h2 class="item-title">環球影城全日攻略</h2>
                 </div>
             </div>
-            <div class="item" onclick="openModal('燒肉內臟 Tokuchan', '野田店\n結束影城行程後，搭乘夢咲線 ⭢ 西九條
+            <div class="item" onclick="openModal('燒肉內臟 Tokuchan', '野田店\n結束影城行程後，搭乘夢咲線 ⭢ 西九條 ⭢ 野田 (25分)。', 'https://app.goo.gl/97N')">
+                <div class="item-time">19:30</div>
+                <div class="item-content">
+                    <span class="item-label">DINNER</span>
+                    <h2 class="item-title">燒肉 Tokuchan</h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="day3" class="timeline">
+            <div class="item" onclick="openModal('敘敘苑 JR京都伊勢丹', '已預約 11:00\n位於伊勢丹百貨 7F，可以一邊吃燒肉一邊看京都風景。', 'https://app.goo.gl/jjo')">
+                <div class="item-time">11:00</div>
+                <div class="item-content">
+                    <span class="item-label">KYOTO LUNCH</span>
+                    <h2 class="item-title">敘敘苑燒肉 <span class="stamp">予約済</span></h2>
+                </div>
+            </div>
+            <div class="item" onclick="openModal('下鴨神社御守清單', '⛩️ 必買推薦：\n- 蕾絲御守：開運與淨化身心\n- 媛守：女性專用，祈求結緣變美\n- 水守：透明設計，消災解厄\n- 相の環守：戒指造型的守護。', 'maps.google.com')">
+                <div class="item-time">14:00</div>
+                <div class="item-content">
+                    <span class="item-label">SHRINE</span>
+                    <h2 class="item-title">下鴨神社與御守</h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="info" class="timeline">
+             <div class="item" onclick="openModal('京都公車禮儀', '1. 勿大聲喧嘩\n2. 下車記得按鈴\n3. 後門上車，前門感應/付費下車\n4. 上車後請往車頭或車尾移動，留空間給其他乘客。', '')">
+                <div class="item-time">Tips</div>
+                <div class="item-content">
+                    <h2 class="item-title">京都巴士使用守則</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="m-title" class="modal-title"></div>
+            <div id="m-body" class="modal-body"></div>
+            <a id="m-map" href="#" class="btn-map" target="_blank">開啟 Google Maps 導航</a>
+        </div>
+    </div>
+
+    <script>
+        function openModal(title, body, mapUrl) {
+            document.getElementById('m-title').innerText = title;
+            document.getElementById('m-body').innerText = body;
+            const mapBtn = document.getElementById('m-map');
+            if(mapUrl) { mapBtn.href = mapUrl; mapBtn.style.display = 'inline-block'; } 
+            else { mapBtn.style.display = 'none'; }
+            document.getElementById('modal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        function switchDay(dayId, btn) {
+            document.querySelectorAll('.timeline').forEach(t => t.classList.remove('active'));
+            document.getElementById(dayId).classList.add('active');
+            document.querySelectorAll('.date-item').forEach(d => d.classList.remove('active'));
+            btn.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
