@@ -7,31 +7,51 @@
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #FDFCF8; --line: #E5E2D9; --primary: #4A4A4A; --accent: #C88F8F; --sub: #999; }
+        :root { --bg: #FDFCF8; --line: #E5E2D9; --primary: #333; --accent: #C88F8F; --sub: #888; }
         body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); margin: 0; color: var(--primary); -webkit-font-smoothing: antialiased; }
-        .header { text-align: center; padding: 40px 20px 10px; }
-        .sub-h { font-size: 10px; letter-spacing: 3px; color: var(--sub); text-transform: uppercase; margin-bottom: 5px; }
-        h1 { font-family: 'Noto Serif TC', serif; font-size: 1.6rem; margin: 0; font-weight: 600; }
-        .date-bar { display: flex; justify-content: center; gap: 15px; margin-top: 25px; border-bottom: 1px solid #EEE; padding-bottom: 15px; }
-        .date-item { text-align: center; font-size: 12px; color: #BBB; cursor: pointer; }
+        
+        /* 頁首設計 */
+        .header { text-align: center; padding: 40px 20px 10px; background: var(--bg); }
+        .sub-h { font-size: 10px; letter-spacing: 4px; color: var(--sub); text-transform: uppercase; margin-bottom: 8px; }
+        h1 { font-family: 'Noto Serif TC', serif; font-size: 1.6rem; margin: 0; font-weight: 600; letter-spacing: 1px; }
+        
+        /* 日期切換欄 */
+        .date-bar { display: flex; justify-content: center; gap: 12px; margin: 25px 0 10px; border-bottom: 1px solid #EEE; padding-bottom: 15px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .date-item { text-align: center; font-size: 11px; color: #BBB; cursor: pointer; flex-shrink: 0; min-width: 45px; }
         .date-item.active { color: var(--primary); font-weight: 600; }
-        .date-item.active span { border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
-        .container { padding: 30px 25px 120px; position: relative; }
+        .date-item.active span { border-bottom: 2px solid var(--accent); padding-bottom: 4px; color: var(--accent); }
+
+        .container { padding: 25px 25px 150px; position: relative; }
+        
+        /* 垂直時間軸 */
         .timeline { position: relative; display: none; }
         .timeline.active { display: block; }
         .timeline::before { content: ''; position: absolute; left: 52px; top: 0; bottom: 0; width: 1px; background: var(--line); }
-        .item { position: relative; padding-left: 75px; margin-bottom: 45px; }
+
+        .item { position: relative; padding-left: 75px; margin-bottom: 40px; }
         .item-time { position: absolute; left: 0; font-family: 'Noto Serif TC', serif; font-size: 1.1rem; color: var(--primary); font-weight: 500; }
         .item-time::after { content: '°'; font-size: 10px; vertical-align: super; margin-left: 2px; }
-        .item-label { font-size: 9px; letter-spacing: 2px; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; display: block; }
-        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; font-weight: 600; margin: 0 0 6px 0; }
+
+        .item-content { position: relative; }
+        .item-label { font-size: 9px; letter-spacing: 1px; color: var(--sub); font-weight: 500; margin-bottom: 4px; display: block; }
+        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 600; margin: 0 0 6px 0; line-height: 1.3; }
         .item-desc { font-size: 13px; color: #666; line-height: 1.7; white-space: pre-line; }
-        .stamp { border: 1.2px solid var(--accent); color: var(--accent); padding: 1px 6px; font-size: 9px; border-radius: 3px; transform: rotate(-8deg); display: inline-block; margin-left: 8px; font-weight: bold; }
-        .nav-link { display: inline-flex; align-items: center; color: var(--sub); text-decoration: none; font-size: 12px; margin-top: 10px; border-bottom: 1px solid #EEE; padding-bottom: 2px; }
-        .important-box { background: #FFF9F9; border-radius: 12px; padding: 15px; margin-top: 15px; font-size: 13px; border: 1px solid #FFEAEA; }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
-        th, td { border: 1px solid #EEE; padding: 8px; text-align: left; }
-        .floating-focus { position: fixed; bottom: 25px; left: 20px; right: 20px; background: white; border-radius: 15px; padding: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; z-index: 2000; }
+
+        /* 標籤樣式 */
+        .stamp { border: 1.2px solid var(--accent); color: var(--accent); padding: 1px 5px; font-size: 9px; border-radius: 3px; transform: rotate(-8deg); display: inline-block; margin-left: 8px; font-weight: bold; }
+        .tag-info { background: #F4F2ED; color: #777; font-size: 11px; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-top: 5px; }
+        
+        /* 重要提示盒 */
+        .important-box { background: #FFF9F9; border: 1px solid #FFEAEA; border-radius: 12px; padding: 12px; margin-top: 10px; font-size: 12px; color: #D64545; }
+        
+        /* 底部懸浮卡片 */
+        .floating-focus { position: fixed; bottom: 25px; left: 20px; right: 20px; background: white; border-radius: 18px; padding: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; border: 1px solid #F0F0F0; z-index: 2000; }
+        .focus-info { flex: 1; }
+        .focus-time { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 600; }
+        .focus-next { font-size: 12px; color: var(--sub); }
+
+        /* 按鈕樣式 */
+        .btn-map { display: inline-flex; align-items: center; color: var(--sub); text-decoration: none; font-size: 12px; margin-top: 10px; border-bottom: 1px solid #EEE; padding-bottom: 2px; }
     </style>
 </head>
 <body>
@@ -40,42 +60,45 @@
         <div class="sub-h">OSAKA · KYOTO 2026</div>
         <h1>小陳旅行社 大阪五天四夜</h1>
         <div class="date-bar">
-            <div class="date-item active" onclick="switchDay('day1', this)">TUE<br><span>14</span></div>
-            <div class="date-item" onclick="switchDay('day2', this)">WED<br><span>15</span></div>
-            <div class="date-item" onclick="switchDay('day3', this)">THU<br><span>16</span></div>
-            <div class="date-item" onclick="switchDay('day4', this)">FRI<br><span>17</span></div>
-            <div class="date-item" onclick="switchDay('day5', this)">SAT<br><span>18</span></div>
-            <div class="date-item" onclick="switchDay('tools', this)">INFO<br><span>🧳</span></div>
+            <div class="date-item active" onclick="switchDay('day1', this)">4/14<br><span>(二)</span></div>
+            <div class="date-item" onclick="switchDay('day2', this)">4/15<br><span>(三)</span></div>
+            <div class="date-item" onclick="switchDay('day3', this)">4/16<br><span>(四)</span></div>
+            <div class="date-item" onclick="switchDay('day4', this)">4/17<br><span>(五)</span></div>
+            <div class="date-item" onclick="switchDay('day5', this)">4/18<br><span>(六)</span></div>
+            <div class="date-item" onclick="switchDay('info', this)">INFO<br><span>🧳</span></div>
         </div>
     </div>
 
     <div class="container">
+        
         <div id="day1" class="timeline active">
             <div class="item">
                 <div class="item-time">06:40</div>
                 <div class="item-content">
-                    <span class="item-label">FLIGHT</span>
-                    <h2 class="item-title">出發 IT210 (TPE-KIX)</h2>
-                    <p class="item-desc">桃園 T2 → 關西 T1 [cite: 5, 6]。預計 10:24 抵達 [cite: 7]。</p>
+                    <span class="item-label">FLIGHT / IT210</span>
+                    <h2 class="item-title">啟程：桃園 (TPE) ⭢ 關西 (KIX)</h2>
+                    <p class="item-desc">預計 10:24 抵達。關西機場 T1。</p>
                 </div>
             </div>
             <div class="item">
                 <div class="item-time">12:00</div>
                 <div class="item-content">
-                    <span class="item-label">HOTEL</span>
-                    <h2 class="item-title">日居大正一号館</h2>
-                    <p class="item-desc">交通：南海地鐵(52分) [cite: 11]。
-                    ⚠️ 行李放玄關，務必拍照回傳房東 [cite: 16]。</p>
-                    <a href="https://goo.gl/maps/A6p8i3vF6u65jD6b7" class="nav-link">🏠 開啟民宿位置</a>
+                    <span class="item-label">TRANSPORT</span>
+                    <h2 class="item-title">往市區：日居大正一号館</h2>
+                    <p class="item-desc">🚇 南海地鐵 關西機場⭢大阪環狀 (52分)
+                    ⚠️ 行李放玄關，務必拍照回傳給房東。</p>
+                    <a href="https://maps.app.goo.gl/yYvP3" class="btn-map">開啟地圖導航 →</a>
                 </div>
             </div>
             <div class="item">
                 <div class="item-time">14:00</div>
                 <div class="item-content">
-                    <span class="item-label">FOOD & SHOP</span>
-                    <h2 class="item-title">心齋橋市區</h2>
-                    <p class="item-desc">午餐：Shake Shack 漢堡 (大丸百貨 1F) [cite: 18, 20]。
-                    逛街：寶可夢中心、吉伊卡哇land、Muji [cite: 22, 23]。</p>
+                    <span class="item-label">SHINSAIBASHI</span>
+                    <h2 class="item-title">午餐與市區逛街</h2>
+                    <p class="item-desc">🍴 午餐：Shake Shack 大丸心齋橋店
+                    🛍️ 大丸：agete, 寶可夢中心
+                    🛍️ PARCO：吉伊卡哇land, cosme, 無印良品
+                    (兩間百貨有空橋互通)</p>
                 </div>
             </div>
             <div class="item">
@@ -83,8 +106,8 @@
                 <div class="item-content">
                     <span class="item-label">DINNER</span>
                     <h2 class="item-title">蔬菜串燒 Naruto ya <span class="stamp">予約済</span></h2>
-                    <p class="item-desc">位於難波，已預約 17:30 [cite: 26]。</p>
-                    <a href="https://goo.gl/maps/6P5vK1p4N4nZ5h6v9" class="nav-link">📍 餐廳導航</a>
+                    <p class="item-desc">已預約 17:30。Yasai Kushimaki Naruto ya Ao。</p>
+                    <a href="https://maps.app.goo.gl/zL6v7" class="btn-map">餐廳地圖 →</a>
                 </div>
             </div>
         </div>
@@ -93,27 +116,36 @@
             <div class="item">
                 <div class="item-time">09:00</div>
                 <div class="item-content">
-                    <span class="item-label">ADVENTURE</span>
-                    <h2 class="item-title">環球影城 USJ</h2>
-                    <p class="item-desc">任天堂園區預約 11:00-12:00 [cite: 53]。
-                    攻略：飛天翼龍、禁忌之旅、庫帕的挑戰 [cite: 54, 64, 85]。</p>
+                    <span class="item-label">USJ ADVENTURE</span>
+                    <h2 class="item-title">日本環球影城 (已訂票)</h2>
+                    <p class="item-desc">🚇 大阪環狀線大正⭢西九條⭢環球城 (20分)
+                    ⭐️ 重點設施：瑪莉歐賽車、禁忌之旅、飛天翼龍、咒術迴戰。</p>
                 </div>
             </div>
             <div class="item">
-                <div class="item-time">12:00</div>
+                <div class="item-time">11:00</div>
                 <div class="item-content">
-                    <span class="item-label">FOOD</span>
-                    <h2 class="item-title">USJ 必吃清單</h2>
-                    <p class="item-desc">貓飯、奶油啤酒、三根掃帚 [cite: 52, 66, 67]。
-                    買：無敵星星爆米花桶、提姆熊髮箍 [cite: 60, 78]。</p>
+                    <span class="item-label">SUPER NINTENDO WORLD</span>
+                    <h2 class="item-title">任天堂園區預約 <span class="stamp">予約済</span></h2>
+                    <p class="item-desc">11:00-11:30 咚奇剛瘋狂礦車
+                    🍴 奇諾比奧咖啡、耀西炒麵麵包
+                    🛍️ 必買：無敵星星爆米花桶、能量手環。</p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-time">13:00</div>
+                <div class="item-content">
+                    <span class="item-label">LUNCH / THEME</span>
+                    <h2 class="item-title">魔物獵人：賽利亞納食堂</h2>
+                    <p class="item-desc">🍴 主打「超真實貓飯」。</p>
                 </div>
             </div>
             <div class="item">
                 <div class="item-time">19:30</div>
                 <div class="item-content">
                     <span class="item-label">DINNER</span>
-                    <h2 class="item-title">燒肉 Tokuchan 野田店</h2>
-                    <p class="item-desc">大阪環狀線西九條 → 野田 [cite: 95, 96]。</p>
+                    <h2 class="item-title">燒肉內臟 Tokuchan 野田店</h2>
+                    <p class="item-desc">🚇 夢咲線環球城⭢西九條⭢野田 (25分)</p>
                 </div>
             </div>
         </div>
@@ -122,19 +154,28 @@
             <div class="item">
                 <div class="item-time">11:00</div>
                 <div class="item-content">
-                    <span class="item-label">FOOD</span>
-                    <h2 class="item-title">敘敘苑燒肉 <span class="stamp">予約済</span></h2>
-                    <p class="item-desc">JR 京都伊勢丹店 7F [cite: 116, 117]。</p>
+                    <span class="item-label">KYOTO LUNCH</span>
+                    <h2 class="item-title">敘敘苑 JR京都伊勢丹店 <span class="stamp">予約済</span></h2>
+                    <p class="item-desc">🚇 大正⭢大阪⭢京都 (1.5hr)
+                    伊勢丹 7F。</p>
                 </div>
             </div>
             <div class="item">
                 <div class="item-time">14:00</div>
                 <div class="item-content">
-                    <span class="item-label">CULTURE</span>
-                    <h2 class="item-title">下鴨神社</h2>
-                    <p class="item-desc">必買：蕾絲御守、媛守 (結緣) [cite: 126, 128]。
-                    ⚠️ 巴士禮儀：保持安靜、下車按鈴 [cite: 105, 107]。</p>
-                    <a href="https://goo.gl/maps/shimogamo" class="nav-link">📍 神社導航</a>
+                    <span class="item-label">SHRINE</span>
+                    <h2 class="item-title">下鴨神社 (賀茂御祖神社)</h2>
+                    <p class="item-desc">🚌 京都車站前⭢下鴨神社前 (30分)
+                    🛍️ 御守：蕾絲御守、媛守(變美)、彥守(事業)、水守、相の環守(戒指)。</p>
+                    <a href="https://maps.app.goo.gl/kX7z8" class="btn-map">神社地圖 →</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-time">18:00</div>
+                <div class="item-content">
+                    <span class="item-label">DINNER</span>
+                    <h2 class="item-title">京都 かに銀 河原町店</h2>
+                    <p class="item-desc">🍴 螃蟹料理專門店。</p>
                 </div>
             </div>
         </div>
@@ -144,24 +185,33 @@
                 <div class="item-time">09:00</div>
                 <div class="item-content">
                     <span class="item-label">MARKET</span>
-                    <h2 class="item-title">木津市場</h2>
-                    <p class="item-desc">大國町站步行 17 分 [cite: 149, 150]。</p>
+                    <h2 class="item-title">木津市場 (海鮮攻略)</h2>
+                    <p class="item-desc">🚇 大正⭢心齋橋⭢大國町站 (17分)</p>
                 </div>
             </div>
             <div class="item">
                 <div class="item-time">14:00</div>
                 <div class="item-content">
                     <span class="item-label">CAFE</span>
-                    <h2 class="item-title">水獺咖啡廳 LOUTRE</h2>
-                    <p class="item-desc">下午兩點營業，無法預約 [cite: 155, 158]。</p>
+                    <h2 class="item-title">LOUTRE 水獺咖啡廳</h2>
+                    <p class="item-desc">下午兩點營業，無法預約。</p>
                 </div>
             </div>
             <div class="item">
                 <div class="item-time">18:00</div>
                 <div class="item-content">
                     <span class="item-label">DINNER</span>
-                    <h2 class="item-title">天星 (天婦羅)</h2>
-                    <p class="item-desc">⚠️ 服裝注意：禁止短褲拖鞋運動服 [cite: 164]。</p>
+                    <h2 class="item-title">天星 (天婦羅專門)</h2>
+                    <div class="important-box">⚠️ 穿著注意：請穿半正式休閒服裝。禁止短褲、拖鞋、涼鞋、運動服、T恤或吊帶背心。</div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-time">20:30</div>
+                <div class="item-content">
+                    <span class="item-label">RELAX</span>
+                    <h2 class="item-title">空庭溫泉</h2>
+                    <p class="item-desc">營業到 23:00。
+                    🚇 堺筋本町⭢弁天町 (30分)</p>
                 </div>
             </div>
         </div>
@@ -170,50 +220,66 @@
             <div class="item">
                 <div class="item-time">11:00</div>
                 <div class="item-content">
-                    <span class="item-label">FOOD</span>
+                    <span class="item-label">LAST LUNCH</span>
                     <h2 class="item-title">うなぎの中庄 鰻魚飯</h2>
-                    <p class="item-desc">心齋橋店 [cite: 182, 183]。</p>
+                    <p class="item-desc">心齋橋店。</p>
                 </div>
             </div>
             <div class="item">
                 <div class="item-time">13:00</div>
                 <div class="item-content">
-                    <span class="item-label">LAST CALL</span>
-                    <h2 class="item-title">臨空城 OUTLET</h2>
-                    <p class="item-desc">預約 13:00 包車前往機場方向 [cite: 186, 187]。</p>
+                    <span class="item-label">OUTLET</span>
+                    <h2 class="item-title">臨空城 OUTLET (包車)</h2>
+                    <p class="item-desc">🚗 已預約 13:00 包車前往。</p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-time">17:00</div>
+                <div class="item-content">
+                    <span class="item-label">RETURN / IT213</span>
+                    <h2 class="item-title">抵達機場 / 返程</h2>
+                    <p class="item-desc">🛫 起飛：19:00 (預計)
+                    🛬 抵達：21:00 (預計)</p>
                 </div>
             </div>
         </div>
 
-        <div id="tools" class="timeline">
+        <div id="info" class="timeline">
             <div class="item">
                 <div class="item-content">
-                    <h2 class="item-title">🚌 京都巴士表</h2>
-                    <table>
-                        <tr><th>類型</th><th>上車</th><th>下車</th></tr>
-                        <tr><td>均一</td><td>後門直接上</td><td>前門付錢 [cite: 111]</td></tr>
-                        <tr><td>多區間</td><td>後門抽整理券</td><td>前門感應/付錢 [cite: 111]</td></tr>
-                    </table>
+                    <h2 class="item-title">🚌 京都巴士注意事項</h2>
+                    <p class="item-desc">1. 勿大聲喧嘩。
+                    2. 下車記得按鈴。
+                    3. 司機見人會停，不用招手。
+                    4. 後門上車，前門付費/感應。</p>
                 </div>
             </div>
             <div class="item">
                 <div class="item-content">
-                    <h2 class="item-title">🛂 USJ 退稅提醒</h2>
-                    <p class="item-desc">地點：Studio Gifts (靠近入口) [cite: 90]。
-                    需：護照正本、收據、未使用商品 [cite: 91, 92, 93]。</p>
+                    <h2 class="item-title">🛂 USJ 退稅規定</h2>
+                    <p class="item-desc">地點：Studio Gifts (入口旁)。
+                    需：護照正本、收據、未使用商品、信用卡。</p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-content">
+                    <h2 class="item-title">🧳 快速清單</h2>
+                    <p class="item-desc">1. 事前準備
+                    2. 代買清單
+                    3. 房東聯繫方式</p>
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="floating-focus">
-        <div style="flex:1">
-            <div style="font-size:16px; font-weight:600">小陳旅行社行程專區</div>
-            <div style="font-size:11px; color:#999">5天4夜 大阪·京都</div>
+        <div class="focus-info">
+            <div class="focus-time">Next Event</div>
+            <div class="focus-next">請選擇上方日期查看行程</div>
         </div>
-        <div style="text-align:right">
-            <div style="font-size:11px; color:var(--accent)">NEXT</div>
-            <div style="font-size:14px; font-weight:600">啟程!</div>
+        <div style="text-align: right;">
+            <div class="tag-info">🇯🇵 日本 · 大阪</div>
         </div>
     </div>
 
@@ -224,6 +290,10 @@
             document.querySelectorAll('.date-item').forEach(d => d.classList.remove('active'));
             btn.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // 更新底部焦點文字 (簡單邏輯)
+            const firstTitle = document.querySelector('#' + dayId + ' .item-title').innerText;
+            document.querySelector('.focus-next').innerText = firstTitle;
         }
     </script>
 </body>
