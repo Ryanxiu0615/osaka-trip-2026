@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>小陳旅行社 · 旅伴分流版</title>
+    <title>小陳旅行社 · 大阪手帖</title>
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
@@ -12,67 +12,76 @@
 
         /* Netflix 使用者選擇畫面 */
         #user-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #141414; z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: 0.5s; }
-        .user-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px; padding: 0 20px; }
-        .user-item { text-align: center; cursor: pointer; }
-        .user-avatar { width: 80px; height: 80px; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; background: #333; transition: 0.2s; border: 2px solid transparent; }
+        .user-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px; }
+        .user-item { text-align: center; cursor: pointer; transition: 0.3s; }
+        .user-avatar { width: 75px; height: 75px; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; background: #333; border: 2px solid transparent; }
         .user-item:active .user-avatar { border-color: white; transform: scale(0.9); }
-        .user-name { font-size: 12px; color: #AAA; }
+        .user-name { font-size: 11px; color: #AAA; }
 
-        /* 主程式畫面 (預設隱藏) */
+        /* 主程式畫面 */
         #main-app { display: none; }
+        .app-header { text-align: center; padding: 40px 20px 0; position: relative; }
+        .switch-user { position: absolute; top: 40px; right: 20px; font-size: 10px; color: var(--accent); border: 1px solid var(--accent); padding: 2px 8px; border-radius: 20px; text-transform: uppercase; }
+        .header-top { font-size: 10px; letter-spacing: 3px; color: var(--sub); text-transform: uppercase; }
+        .header-title { font-family: 'Noto Serif TC', serif; font-size: 1.55rem; font-weight: 600; margin-top: 8px; }
 
-        /* 頂部導航與使用者資訊 */
-        .app-header { text-align: center; padding: 35px 20px 0; position: relative; }
-        .switch-user { position: absolute; top: 35px; right: 20px; font-size: 11px; color: var(--accent); border: 1px solid var(--accent); padding: 3px 10px; border-radius: 20px; }
-        .header-title { font-family: 'Noto Serif TC', serif; font-size: 1.5rem; font-weight: 600; margin-top: 8px; }
-
-        /* 天氣、時間軸 (沿用妳喜歡的極簡設計) */
+        /* 天氣條 */
         .weather-scroll { padding: 15px 25px; display: flex; overflow-x: auto; gap: 20px; scrollbar-width: none; }
         .weather-scroll::-webkit-scrollbar { display: none; }
+        .w-item { text-align: center; min-width: 45px; }
+
+        /* 行程容器 */
         .container { padding: 20px 20px 180px; }
-        .timeline { position: relative; border-left: 1px solid var(--line); margin-left: 65px; }
+        .timeline { position: relative; border-left: 1.5px solid var(--line); margin-left: 65px; }
         .item { position: relative; padding-left: 25px; margin-bottom: 50px; cursor: pointer; }
         .item-time { position: absolute; left: -85px; top: 0; font-family: 'Noto Serif TC', serif; font-size: 1.3rem; }
         .item-time::after { content: '°'; font-size: 12px; vertical-align: super; }
+        .item-label { font-size: 9px; color: var(--sub); letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase; display: block; }
         .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.2rem; font-weight: 600; }
+        .stamp { border: 1.5px solid var(--accent); color: var(--accent); padding: 1px 5px; font-size: 9px; border-radius: 4px; transform: rotate(-10deg); display: inline-block; margin-left: 10px; font-weight: bold; }
 
-        /* 導遊字卡 Modal */
+        /* 導遊 Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; z-index: 3000; align-items: flex-end; backdrop-filter: blur(8px); }
         .modal-content { background: white; width: 100%; max-height: 90%; border-radius: 30px 30px 0 0; padding: 35px 25px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         .close-btn { position: absolute; top: 20px; right: 20px; font-size: 26px; color: #CCC; cursor: pointer; }
         
         .blogger-tip { background: #FFF9F9; border-radius: 12px; padding: 15px; border-left: 4px solid var(--accent); margin: 15px 0; font-size: 13px; line-height: 1.6; color: #555; }
+        .blogger-tip b { color: var(--accent); }
         .info-item { background: var(--box-bg); border: 1px solid #F0F0F0; padding: 15px; border-radius: 12px; margin-bottom: 10px; }
+        .info-main { font-size: 14px; font-weight: 600; color: #333; }
+        .info-sub { font-size: 11px; color: var(--sub); margin-top: 3px; }
 
-        /* 備忘錄區塊 */
+        /* 備忘錄 */
         .memo-section { background: #FDFBEE; border: 1px solid #E6E0B3; border-radius: 12px; padding: 15px; margin-top: 25px; }
-        .memo-title { font-size: 11px; font-weight: 700; color: #857E5D; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .memo-title { font-size: 11px; font-weight: 700; color: #857E5D; margin-bottom: 10px; }
         .memo-input { width: 100%; border: none; background: transparent; font-size: 14px; line-height: 1.6; color: #333; outline: none; min-height: 80px; resize: none; }
 
         .btn-map { display: block; background: #333; color: white; text-align: center; padding: 18px; border-radius: 15px; text-decoration: none; margin-top: 25px; font-weight: 600; }
+        
+        /* 底部焦點卡片 */
         .focus-card { position: fixed; bottom: 30px; left: 15px; right: 15px; background: white; border-radius: 20px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; z-index: 2000; border: 1px solid #F0F0F0; }
     </style>
 </head>
 <body>
 
     <div id="user-screen">
-        <h2 style="font-family:'Noto Serif TC', serif; letter-spacing:2px;">誰要開始旅行？</h2>
+        <h2 style="font-family:'Noto Serif TC', serif; letter-spacing:2px; font-weight:500;">誰要開始旅行？</h2>
         <div class="user-grid">
-            <div class="user-item" onclick="selectUser('A')"><div class="user-avatar" style="background:#E50914;">A</div><div class="user-name">旅伴 A</div></div>
-            <div class="user-item" onclick="selectUser('B')"><div class="user-avatar" style="background:#54B4E4;">B</div><div class="user-name">旅伴 B</div></div>
-            <div class="user-item" onclick="selectUser('C')"><div class="user-avatar" style="background:#E5B958;">C</div><div class="user-name">旅伴 C</div></div>
-            <div class="user-item" onclick="selectUser('D')"><div class="user-avatar" style="background:#75BF75;">D</div><div class="user-name">旅伴 D</div></div>
-            <div class="user-item" onclick="selectUser('E')"><div class="user-avatar" style="background:#B375BF;">E</div><div class="user-name">旅伴 E</div></div>
-            <div class="user-item" onclick="selectUser('F')"><div class="user-avatar" style="background:#333333;">F</div><div class="user-name">旅伴 F</div></div>
+            <div class="user-item" onclick="selectUser('A', '#E50914')"><div class="user-avatar" style="background:#E50914;">A</div><div class="user-name">旅伴 A</div></div>
+            <div class="user-item" onclick="selectUser('B', '#54B4E4')"><div class="user-avatar" style="background:#54B4E4;">B</div><div class="user-name">旅伴 B</div></div>
+            <div class="user-item" onclick="selectUser('C', '#E5B958')"><div class="user-avatar" style="background:#E5B958;">C</div><div class="user-name">旅伴 C</div></div>
+            <div class="user-item" onclick="selectUser('D', '#75BF75')"><div class="user-avatar" style="background:#75BF75;">D</div><div class="user-name">旅伴 D</div></div>
+            <div class="user-item" onclick="selectUser('E', '#B375BF')"><div class="user-avatar" style="background:#B375BF;">E</div><div class="user-name">旅伴 E</div></div>
+            <div class="user-item" onclick="selectUser('F', '#333333')"><div class="user-avatar" style="background:#333333;">F</div><div class="user-name">旅伴 F</div></div>
         </div>
     </div>
 
     <div id="main-app">
         <div class="app-header">
-            <span class="switch-user" onclick="location.reload()">切換使用者</span>
-            <div style="font-size:10px; letter-spacing:3px; color:var(--sub); text-transform:uppercase;">FAMILY TRIP · 2026</div>
-            <h1 class="header-title" id="app-user-name">大阪旅行手帖</h1>
+            <span class="switch-user" onclick="location.reload()">Switch</span>
+            <div class="header-top">FAMILY TRIP · 2026</div>
+            <h1 class="header-title" id="display-user-name">大阪旅行手帖</h1>
         </div>
 
         <div class="weather-scroll" id="hourlyWeather">讀取中...</div>
@@ -83,7 +92,7 @@
 
         <div class="focus-card">
             <div style="flex:1;">
-                <div style="font-family:'Noto Serif TC', serif; font-size:1.35rem;">12:00 <span style="font-size:10px; color:#999; margin-left:8px;">NEXT</span></div>
+                <div style="font-family:'Noto Serif TC', serif; font-size:1.35rem;">12:00 <span style="font-size:10px; color:#999; margin-left:8px; font-weight:normal;">NEXT</span></div>
                 <div style="font-size:14px; font-weight:600; margin-top:5px;">午餐：Shake Shack 漢堡</div>
             </div>
         </div>
@@ -92,18 +101,19 @@
     <div id="modal" class="modal-overlay" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">×</span>
-            <h2 id="m-title" style="font-family:'Noto Serif TC', serif; font-size:1.5rem; margin-bottom:5px;"></h2>
+            <div style="font-size:10px; color:var(--accent); font-weight:700; letter-spacing:1px;" id="m-category"></div>
+            <h2 id="m-title" style="font-family:'Noto Serif TC', serif; font-size:1.5rem; margin:10px 0;"></h2>
             <div class="blogger-tip" id="m-blogger-tip"></div>
             
-            <div style="font-size:11px; color:var(--sub); border-bottom:1px solid #F0F0F0; padding-bottom:5px; margin:20px 0 12px;">導遊深度建議 (INSIDER TIPS)</div>
+            <div style="font-size:11px; color:var(--sub); border-bottom:1px solid #F0F0F0; padding-bottom:5px; margin:20px 0 12px;">導遊深度攻略 (INSIDER GUIDE)</div>
             <div id="m-info-grid"></div>
 
             <div class="memo-section">
-                <div class="memo-title">📝 我的私房筆記 (僅自己看得到)</div>
-                <textarea id="m-memo" class="memo-input" placeholder="在這裡記下妳想買的東西或代購清單..."></textarea>
+                <div class="memo-title">📝 我的個人筆記 (僅自己可見)</div>
+                <textarea id="m-memo" class="memo-input" placeholder="記下代購清單或想買的商品..."></textarea>
             </div>
 
-            <a id="m-map" href="#" class="btn-map">📍 開啟 Google Maps 導航</a>
+            <a id="m-map" href="#" class="btn-map" target="_blank">📍 開啟 Google Maps 導航</a>
         </div>
     </div>
 
@@ -113,38 +123,52 @@
 
         const guideData = {
             flight: {
-                title: "星宇 IT210 出發",
-                bloggerTip: "<b>導遊叮嚀：</b>IT210 預計 10:24 抵達。如果是搭乘星宇，關西機場 T1 入境後直接左轉二樓就是南海電鐵。",
-                list: [ { main: "VJW 截圖", sub: "記得提前準備好 QR Code 以免網路卡頓" } ],
-                map: ""
+                category: "FLIGHT", title: "星宇航空 IT210", 
+                bloggerTip: "<b>導遊叮嚀：</b>IT210 預計 10:24 抵達。下機後請快速移動，關西機場 T1 入境後直接二樓就是南海電鐵站，非常快速！記得提早準備好 VJW 截圖以免現場網路不穩。",
+                list: [ { main: "VJW 截圖", sub: "提前準備好 QR Code 以免現場網路不穩" }, { main: "電鐵購票", sub: "南海電鐵改閘口就在二樓對面" } ],
+                map: "https://www.google.com/maps/search/?api=1&query=Kansai+Airport+Station"
             },
             lunch: {
-                title: "午餐：Shake Shack",
-                bloggerTip: "<b>導遊私藏：</b>這家店有推出大阪限定的<b>『心齋橋奶昔』</b>。推薦點 ShackBurger 搭配起司薯條。",
-                list: [ { main: "心齋橋限定奶昔", sub: "這間店才有的獨家口味" }, { main: "起司薯條", sub: "大家分食的最佳組合" } ],
-                map: "https://app.goo.gl/xS7D"
+                category: "FOOD", title: "Shake Shack 漢堡", 
+                bloggerTip: "<b>導遊推薦：</b>這家店位於大丸心齋橋 1 樓，採光極佳。必點<b>『心齋橋限定奶昔』</b>。如果是 6 人團體，建議分兩組找位子比較快，漢堡現點現做要有等待 15 分鐘的心理準備。",
+                list: [ { main: "ShackBurger", sub: "經典必點，安格斯牛肉起司堡" }, { main: "心齋橋限定奶昔", sub: "獨家口味，打卡必備" } ],
+                map: "https://www.google.com/maps/search/?api=1&query=Shake+Shack+Daimaru+Shinsaibashi"
             },
             shopping: {
-                title: "心齋橋商圈全攻略",
-                bloggerTip: "<b>導遊秘技：</b>大丸與 PARCO 退稅是分開辦理的！想逛吉伊卡哇的人請直衝 PARCO 6F。",
-                list: [ { main: "WPC 傘 (PARCO 5F)", sub: "超輕量！日本女孩必買" }, { main: "Bâton d'or (大丸 B1)", sub: "Pocky 界的愛馬仕" } ],
-                map: "https://app.goo.gl/shinsaibashi"
+                category: "GUIDE", title: "心齋橋商圈全攻略", 
+                bloggerTip: "<b>重要退稅陷阱：</b>大丸與 PARCO 退稅是分開辦理的！大丸買的去本館 4F，PARCO 的則是在 PARCO 指定櫃檯。買藥妝推薦去<b>松本清</b>或 <b>Sun Drug</b> 比價。",
+                list: [
+                    { main: "吉伊卡哇Land (PARCO 6F)", sub: "全關西最齊全， Chiikawa 粉必衝" },
+                    { main: "寶可夢中心 (大丸 9F)", sub: "超大傳說級門市，有大阪限定皮卡丘" },
+                    { main: "Strawberry Mania", sub: "超浮誇草莓甜點店，台灣女生瘋傳的打卡地" },
+                    { main: "3Coins 雜貨 (PARCO B1F)", sub: "CP值最高！全店300日圓起，可愛居家小物首選" },
+                    { main: "@cosme (PARCO 3F)", sub: "排行榜美妝實測，一站購齊免跑多家" }
+                ],
+                map: "https://www.google.com/maps/search/?api=1&query=Shinsaibashi-suji+Shopping+Street"
+            },
+            dinner: {
+                category: "DINNER", title: "蔬菜串燒 Naruto ya", 
+                bloggerTip: "<b>導遊小撇步：</b>主打清爽蔬菜肉捲。<b>生菜肉捲 (レタス巻き)</b> 是人氣第一！外套可收在椅子下避免沾味，已預約 17:30。",
+                list: [ { main: "生菜肉捲 (必點)", sub: "清脆爽口，女孩評價最高" }, { main: "半熟卵肉捲", sub: "蛋液飽滿，視覺效果十足" } ],
+                map: "https://www.google.com/maps/search/?api=1&query=Yasai+Kushimaki+Naruto+ya+Ao"
             }
         };
 
         const timeline = [
-            { time: "06:40", title: "星宇 IT210 出發", key: "flight" },
-            { time: "12:00", title: "午餐：Shake Shack", key: "lunch" },
-            { time: "14:00", title: "心齋橋商圈全攻略", key: "shopping" }
+            { time: "06:40", title: "星宇 IT210 出發", key: "flight", label: "FLIGHT" },
+            { time: "12:00", title: "午餐：Shake Shack", key: "lunch", label: "FOOD" },
+            { time: "14:00", title: "心齋橋商圈深度攻略", key: "shopping", label: "GUIDE" },
+            { time: "17:30", title: "蔬菜串燒 Narutoya", key: "dinner", label: "RESERVATION" }
         ];
 
-        function selectUser(user) {
+        function selectUser(user, color) {
             currentUser = user;
             document.getElementById('user-screen').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('user-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
-                document.getElementById('app-user-name').innerText = `旅伴 ${user} 的大阪手帖`;
+                document.getElementById('display-user-name').innerText = `旅伴 ${user} 的大阪手帖`;
+                document.getElementById('display-user-name').style.color = color;
                 renderTimeline();
                 fetchWeather();
             }, 500);
@@ -154,7 +178,10 @@
             document.getElementById('mainTimeline').innerHTML = timeline.map(i => `
                 <div class="item" onclick="showGuide('${i.key}')">
                     <div class="item-time">${i.time}</div>
-                    <div class="item-content"><h2 class="item-title">${i.title}</h2></div>
+                    <div class="item-content">
+                        <span class="item-label">${i.label}</span>
+                        <h2 class="item-title">${i.title} ${i.key==='dinner'?'<span class="stamp">預約済</span>':''}</h2>
+                    </div>
                 </div>
             `).join('');
         }
@@ -162,21 +189,21 @@
         function showGuide(key) {
             currentItemKey = key;
             const d = guideData[key];
+            document.getElementById('m-category').innerText = d.category;
             document.getElementById('m-title').innerText = d.title;
             document.getElementById('m-blogger-tip').innerHTML = d.bloggerTip;
             document.getElementById('m-info-grid').innerHTML = d.list.map(i => `
                 <div class="info-item"><div class="info-main">${i.main}</div><div class="info-sub">${i.sub}</div></div>
             `).join('');
 
-            // 讀取該使用者的個人備忘錄
             const savedMemo = localStorage.getItem(`memo_${currentUser}_${key}`) || "";
             document.getElementById('m-memo').value = savedMemo;
 
-            document.getElementById('m-map').href = d.map;
+            const btn = document.getElementById('m-map');
+            if(d.map) { btn.href = d.map; btn.style.display = 'block'; } else { btn.style.display = 'none'; }
             document.getElementById('modal').style.display = 'flex';
         }
 
-        // 當使用者輸入備忘錄時，自動儲存
         document.getElementById('m-memo').addEventListener('input', (e) => {
             localStorage.setItem(`memo_${currentUser}_${currentItemKey}`, e.target.value);
         });
@@ -191,7 +218,7 @@
             for (let i = 0; i < 12; i++) {
                 const t = data.hourly.time[i].split('T')[1];
                 const temp = Math.round(data.hourly.temperature_2m[i]);
-                scroll.innerHTML += `<div style="text-align:center; min-width:45px;"><div style="font-size:10px; color:#999;">${t}</div><div style="font-size:1.2rem; margin:5px 0;">🌤️</div><div style="font-size:13px; font-weight:600;">${temp}°</div></div>`;
+                scroll.innerHTML += `<div class="w-item"><div style="font-size:10px; color:#999;">${t}</div><div style="font-size:1.2rem; margin:5px 0;">🌤️</div><div style="font-size:13px; font-weight:600;">${temp}°</div></div>`;
             }
         }
     </script>
