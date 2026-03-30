@@ -3,52 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>小陳旅行社 · Day 1 測試</title>
+    <title>小陳旅行社 · 大阪手帖</title>
     <link rel="manifest" href="manifest.json">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #FDFCF8; --line: #E5E2D9; --primary: #333; --accent: #C88F8F; --sub: #888; --ticket-bg: #FCFBF7; }
+        :root { 
+            --bg: #F5F2ED; /* 奶茶色底 */
+            --card: #FFFFFF;
+            --primary: #434343; 
+            --accent: #D98C8C; /* 暖粉色 */
+            --secondary: #8E9775; /* 抹茶綠 */
+            --sub: #A09383; 
+        }
         body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); margin: 0; color: var(--primary); -webkit-font-smoothing: antialiased; }
         
-        /* Header */
-        .header { text-align: center; padding: 40px 20px 0; }
-        .sub-h { font-size: 10px; letter-spacing: 4px; color: var(--sub); text-transform: uppercase; }
-        h1 { font-family: 'Noto Serif TC', serif; font-size: 1.5rem; margin: 10px 0; font-weight: 600; }
+        /* 頂部形象圖 */
+        .hero-image { width: 100%; height: 200px; object-fit: cover; background: #DDD; border-bottom: 4px solid var(--accent); }
         
-        /* Apple Style Weather Scroll */
-        .weather-section { margin: 10px 20px 20px; padding: 15px; background: rgba(244, 242, 237, 0.5); border-radius: 20px; border: 1px solid rgba(0,0,0,0.03); }
-        .weather-title { font-size: 11px; color: var(--sub); margin-bottom: 12px; display: flex; justify-content: space-between; }
-        .hourly-scroll { display: flex; overflow-x: auto; gap: 20px; padding-bottom: 10px; scrollbar-width: none; }
+        .header { text-align: center; padding: 25px 20px 10px; background: white; }
+        .sub-h { font-size: 10px; letter-spacing: 4px; color: var(--sub); text-transform: uppercase; }
+        h1 { font-family: 'Noto Serif TC', serif; font-size: 1.5rem; margin: 8px 0; font-weight: 600; }
+        
+        /* 天氣區塊 */
+        .weather-section { margin: -20px 20px 20px; padding: 18px; background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); position: relative; z-index: 10; }
+        .hourly-scroll { display: flex; overflow-x: auto; gap: 20px; padding-bottom: 5px; scrollbar-width: none; }
         .hourly-scroll::-webkit-scrollbar { display: none; }
         .hour-item { text-align: center; min-width: 45px; flex-shrink: 0; }
-        .hour-time { font-size: 11px; color: var(--sub); margin-bottom: 8px; }
-        .hour-icon { font-size: 1.5rem; margin-bottom: 8px; }
-        .hour-temp { font-size: 14px; font-weight: 600; }
-
-        /* Date Bar */
-        .date-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #EEE; padding-bottom: 15px; }
-        .date-item { text-align: center; font-size: 11px; color: #BBB; min-width: 50px; }
-        .date-item.active { color: var(--accent); font-weight: 600; }
-        .date-item.active span { border-bottom: 2px solid var(--accent); padding-bottom: 4px; }
-
-        /* Timeline Container */
-        .container { padding: 0 25px 120px; }
-        .timeline { position: relative; border-left: 1px solid var(--line); margin-left: 55px; padding-left: 25px; }
         
-        /* Timeline Items */
-        .item { position: relative; margin-bottom: 40px; cursor: pointer; }
-        .item-time { position: absolute; left: -80px; font-family: 'Noto Serif TC', serif; font-size: 1.1rem; color: var(--primary); width: 50px; text-align: right; }
-        .item-time::after { content: '°'; font-size: 10px; vertical-align: super; }
-        .item-label { font-size: 9px; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; display: block; letter-spacing: 1px; }
-        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; font-weight: 600; margin: 0; line-height: 1.3; }
-        .stamp { border: 1.2px solid var(--accent); color: var(--accent); padding: 1px 5px; font-size: 9px; border-radius: 3px; transform: rotate(-8deg); display: inline-block; margin-left: 8px; font-weight: bold; }
+        /* 行程容器 */
+        .container { padding: 10px 20px 150px; }
+        .timeline { position: relative; border-left: 2px solid #EAE5D8; margin-left: 55px; padding-left: 25px; }
         
-        /* Shopping Chips */
-        .shop-chip { display: inline-block; padding: 2px 8px; background: #F0F0F0; border-radius: 4px; font-size: 10px; color: #777; margin-top: 6px; margin-right: 4px; font-weight: 500; }
+        /* 卡片化行程 */
+        .item { position: relative; margin-bottom: 35px; background: white; padding: 20px; border-radius: 18px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); cursor: pointer; transition: 0.3s; }
+        .item:active { transform: scale(0.97); }
+        .item-time { position: absolute; left: -98px; font-family: 'Noto Serif TC', serif; font-size: 1.1rem; color: var(--primary); top: 20px; width: 60px; text-align: right; }
+        .item-label { font-size: 9px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 6px; display: block; letter-spacing: 1px; }
+        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
+        
+        /* 繽紛標籤 */
+        .shop-chip { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; margin-right: 5px; margin-top: 5px; }
+        .chip-anime { background: #FFE5E5; color: #D98C8C; }
+        .chip-beauty { background: #E5F0FF; color: #7096D1; }
+        .chip-food { background: #FFF4E5; color: #D4A373; }
 
-        /* Modal (Bottom Sheet Style) */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; z-index: 3000; align-items: flex-end; justify-content: center; backdrop-filter: blur(4px); }
-        .modal-content { background: white; width: 100%; max-height: 85%; border-radius: 24px 24px 0 0; padding: 35px 25px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease-out; }
+        /* 預約票券 */
+        .booking-card { background: #FAFAFA; border: 2px dashed #EEE; border-radius: 12px; padding: 15px; margin: 15px 0; }
+        .booking-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; }
+        .booking-val { font-weight: 600; color: var(--accent); }
+
+        /* Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; z-index: 3000; align-items: flex-end; justify-content: center; backdrop-filter: blur(8px); }
+        .modal-content { background: white; width: 100%; max-height: 85%; border-radius: 30px 30px 0 0; padding: 40px 25px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #CCC; }
-        .modal-title { font-family: 'Noto Serif TC', serif; font-size: 1.35rem; color: var(--primary
+        .close-x { position: absolute; top: 20px; right: 20px; font-size: 24px; color: #DDD; cursor: pointer; }
+        .btn-map { display: block; background: var(--primary); color: white; text-align: center; padding: 16px; border-radius: 15px; text-decoration: none; margin-top: 25px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <img src="https://images.unsplash.com/photo-1590559063416-86d3824f2162?auto=format&fit=crop&q=80&w=1000" alt="Osaka" class="hero-image">
+
+    <div class="header">
+        <div class="sub-h">Day 01 · 4/14 Tue</div>
+        <h1>小陳旅行社 · 心齋橋攻略</h1>
+    </div>
+
+    <div class="weather-section">
+        <div class="hourly-scroll" id="hourlyWeather">讀取中...</div>
+    </div>
+
+    <div class="container">
+        <div class="timeline">
+            <div class="item" onclick="openModal('民宿入住指引', '🏨 日居大正一号館\n● 提醒：6人入住，行李請務必整齊放置玄關。\n● 房東叮嚀：拍照回傳確認入住狀態。 [cite: 11-13, 16]', 'https://goo.gl/maps/A6p8i3vF6u65jD6b7', null)">
+                <div class="item-time">12:00</div>
+                <div class="item-content">
+                    <span class="item-label">Check-in</span>
+                    <h2 class="item-title">日居大正一号館 [cite: 8]</h2>
+                </div>
+            </div>
+
+            <div class="item" onclick="openModal('心齋橋必逛攻略', '🏢 大丸百貨 (Daimaru)：\n- 9F：寶可夢中心 [cite: 22]\n🏢 PARCO (與大丸連通)：\n- 6F：吉伊卡哇Land、CAPCOM [cite: 23]\n- 其他：@cosme (美妝)、3Coins (雜貨) [cite: 23]\n🍴 午餐：Shake Shack 漢堡 [cite: 18, 19]', 'https://app.goo.gl/xS7D', null)">
+                <div class="item-time">14:00</div>
+                <div class="item-content">
+                    <span class="item-label">Shopping</span>
+                    <h2 class="item-title">大丸 & PARCO 攻略 [cite: 22-24]</h2>
+                    <span class="shop-chip chip-anime">吉伊卡哇</span>
+                    <span class="shop-chip chip-anime">寶可夢</span>
+                    <span class="shop-chip chip-beauty">@cosme</span>
+                </div>
+            </div>
+
+            <div class="item" onclick="openModal('心齋橋小吃指南', '📍 章魚燒：甲賀流 (美國村)\n📍 烤糰子：心齋橋商店街內多處現烤小店。\n這區有很多日牌服飾，25-35歲女性最愛的品牌都在這！', '')">
+                <div class="item-time">16:00</div>
+                <div class="item-content">
+                    <span class="item-label">Street Food</span>
+                    <h2 class="item-title">章魚燒與烤糰子時間</h2>
+                    <span class="shop-chip chip-food">章魚燒</span>
+                    <span class="shop-chip chip-food">烤糰子</span>
+                </div>
+            </div>
+
+            <div class="item" onclick="openModal('蔬菜串燒 Naruto ya', '已預約 17:30 [cite: 26]\nYasai Kushimaki Naruto ya Ao [cite: 27]\n口感清爽，深受女性歡迎！', 'https://app.goo.gl/zL6v7', {time: '17:30', code: 'NRT-0414-6P', people: '6位 大人'})">
+                <div class="item-time">17:30</div>
+                <div class="item-content">
+                    <span class="item-label">Dinner</span>
+                    <h2 class="item-title">蔬菜串燒 <span style="color:var(--accent);">予約済</span> [cite: 26]</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-x" onclick="closeModal()">×</span>
+            <div id="m-title" class="modal-title"></div>
+            <div id="booking-box" class="booking-card" style="display:none;">
+                <div class="booking-row"><span>預約時間</span><span id="b-time" class="booking-val"></span></div>
+                <div class="booking-row"><span>確認代碼</span><span id="b-code" class="booking-val"></span></div>
+                <div class="booking-row"><span>預約人數</span><span id="b-people" class="booking-val"></span></div>
+            </div>
+            <div id="m-body" style="font-size:14px; line-height:1.8; white-space:pre-line; color:#555;"></div>
+            <a id="m-map" href="#" class="btn-map" target="_blank">📍 開啟 Google Maps</a>
+        </div>
+    </div>
+
+    <script>
+        async function fetchWeather() {
+            const scroll = document.getElementById('hourlyWeather');
+            try {
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=34.69&longitude=135.50&hourly=temperature_2m,weathercode&timezone=Asia%2FTokyo`);
+                const data = await res.json();
+                scroll.innerHTML = '';
+                for (let i = 0; i < 12; i++) {
+                    const t = data.hourly.time[i].split('T')[1];
+                    const temp = Math.round(data.hourly.temperature_2m[i]);
+                    const code = data.hourly.weathercode[i];
+                    const icon = code <= 3 ? '☀️' : code <= 48 ? '☁️' : '🌧️';
+                    scroll.innerHTML += `<div class="hour-item"><div class="hour-time">${t}</div><div class="hour-icon">${icon}</div><div class="hour-temp">${temp}°</div></div>`;
+                }
+            } catch (e) { scroll.innerHTML = '氣象加載中...'; }
+        }
+        function openModal(t, b, m, book) {
+            document.getElementById('m-title').innerText = t;
+            document.getElementById('m-body').innerText = b;
+            const box = document.getElementById('booking-box');
+            if(book) {
+                box.style.display = 'block';
+                document.getElementById('b-time').innerText = book.time;
+                document.getElementById('b-code').innerText = book.code;
+                document.getElementById('b-people').innerText = book.people;
+            } else { box.style.display = 'none'; }
+            const btn = document.getElementById('m-map');
+            if(m) { btn.href = m; btn.style.display = 'block'; } else { btn.style.display = 'none'; }
+            document.getElementById('modal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        fetchWeather();
+    </script>
+</body>
+</html>
