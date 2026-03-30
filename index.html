@@ -7,108 +7,112 @@
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg: #F5F2ED; /* 奶茶色底 */
-            --card: #FFFFFF;
-            --primary: #434343; 
-            --accent: #D98C8C; /* 暖粉色 */
-            --secondary: #8E9775; /* 抹茶綠 */
-            --sub: #A09383; 
-        }
+        :root { --bg: #F9F9F9; --card: #FFFFFF; --primary: #333; --accent: #C88F8F; --line: #EAEAEA; --sub: #999; }
         body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); margin: 0; color: var(--primary); -webkit-font-smoothing: antialiased; }
         
-        /* 頂部形象圖 */
-        .hero-image { width: 100%; height: 200px; object-fit: cover; background: #DDD; border-bottom: 4px solid var(--accent); }
+        /* 頂部標題區 */
+        .app-header { background: white; padding: 40px 25px 20px; text-align: left; border-bottom: 1px solid #F0F0F0; }
+        .app-header span { font-size: 11px; letter-spacing: 2px; color: var(--sub); text-transform: uppercase; }
+        .app-header h1 { font-family: 'Noto Serif TC', serif; font-size: 1.6rem; margin: 8px 0 0 0; font-weight: 600; }
         
-        .header { text-align: center; padding: 25px 20px 10px; background: white; }
-        .sub-h { font-size: 10px; letter-spacing: 4px; color: var(--sub); text-transform: uppercase; }
-        h1 { font-family: 'Noto Serif TC', serif; font-size: 1.5rem; margin: 8px 0; font-weight: 600; }
-        
-        /* 天氣區塊 */
-        .weather-section { margin: -20px 20px 20px; padding: 18px; background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); position: relative; z-index: 10; }
+        /* 每小時氣象條 */
+        .weather-scroll-container { background: white; padding: 15px 25px; margin-bottom: 10px; border-bottom: 1px solid #F0F0F0; }
+        .weather-title { font-size: 11px; color: var(--sub); margin-bottom: 12px; }
         .hourly-scroll { display: flex; overflow-x: auto; gap: 20px; padding-bottom: 5px; scrollbar-width: none; }
         .hourly-scroll::-webkit-scrollbar { display: none; }
-        .hour-item { text-align: center; min-width: 45px; flex-shrink: 0; }
-        
+        .hour-item { text-align: center; min-width: 42px; flex-shrink: 0; }
+        .hour-time { font-size: 10px; color: var(--sub); margin-bottom: 6px; }
+        .hour-temp { font-size: 13px; font-weight: 500; }
+
+        /* 日期選擇 */
+        .date-bar { display: flex; background: white; padding: 10px 25px 20px; gap: 15px; border-bottom: 1px solid #F0F0F0; }
+        .date-item { text-align: center; font-size: 11px; color: #CCC; min-width: 45px; cursor: pointer; }
+        .date-item.active { color: var(--accent); font-weight: 600; }
+        .date-item.active span { border-bottom: 2px solid var(--accent); padding-bottom: 4px; }
+
         /* 行程容器 */
-        .container { padding: 10px 20px 150px; }
-        .timeline { position: relative; border-left: 2px solid #EAE5D8; margin-left: 55px; padding-left: 25px; }
+        .container { padding: 30px 25px 120px; }
+        .timeline { position: relative; border-left: 1.5px solid var(--line); margin-left: 55px; padding-left: 25px; }
         
-        /* 卡片化行程 */
-        .item { position: relative; margin-bottom: 35px; background: white; padding: 20px; border-radius: 18px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); cursor: pointer; transition: 0.3s; }
-        .item:active { transform: scale(0.97); }
-        .item-time { position: absolute; left: -98px; font-family: 'Noto Serif TC', serif; font-size: 1.1rem; color: var(--primary); top: 20px; width: 60px; text-align: right; }
-        .item-label { font-size: 9px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 6px; display: block; letter-spacing: 1px; }
-        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
+        /* 行程卡片 */
+        .item { position: relative; margin-bottom: 35px; background: var(--card); padding: 18px; border-radius: 16px; border: 1px solid #F0F0F0; box-shadow: 0 4px 12px rgba(0,0,0,0.02); cursor: pointer; }
+        .item-time { position: absolute; left: -100px; font-family: 'Noto Serif TC', serif; font-size: 1.1rem; color: var(--primary); top: 18px; width: 60px; text-align: right; }
+        .item-time::after { content: '°'; font-size: 10px; vertical-align: super; }
+        .item-label { font-size: 9px; color: var(--sub); text-transform: uppercase; margin-bottom: 6px; display: block; letter-spacing: 1px; }
+        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; font-weight: 600; line-height: 1.4; }
+        .stamp { border: 1.2px solid var(--accent); color: var(--accent); padding: 1px 4px; font-size: 9px; border-radius: 3px; transform: rotate(-8deg); display: inline-block; margin-left: 6px; font-weight: bold; }
         
-        /* 繽紛標籤 */
-        .shop-chip { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; margin-right: 5px; margin-top: 5px; }
-        .chip-anime { background: #FFE5E5; color: #D98C8C; }
-        .chip-beauty { background: #E5F0FF; color: #7096D1; }
-        .chip-food { background: #FFF4E5; color: #D4A373; }
+        /* 標籤 */
+        .tag { display: inline-block; padding: 2px 8px; background: #F8F8F8; border: 1px solid #EEE; border-radius: 4px; font-size: 10px; color: #777; margin-top: 8px; margin-right: 4px; }
 
-        /* 預約票券 */
-        .booking-card { background: #FAFAFA; border: 2px dashed #EEE; border-radius: 12px; padding: 15px; margin: 15px 0; }
-        .booking-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; }
-        .booking-val { font-weight: 600; color: var(--accent); }
-
-        /* Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; z-index: 3000; align-items: flex-end; justify-content: center; backdrop-filter: blur(8px); }
-        .modal-content { background: white; width: 100%; max-height: 85%; border-radius: 30px 30px 0 0; padding: 40px 25px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease-out; }
+        /* 彈窗 Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 3000; align-items: flex-end; justify-content: center; backdrop-filter: blur(4px); }
+        .modal-content { background: white; width: 100%; max-height: 85%; border-radius: 24px 24px 0 0; padding: 35px 25px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .close-x { position: absolute; top: 20px; right: 20px; font-size: 24px; color: #DDD; cursor: pointer; }
-        .btn-map { display: block; background: var(--primary); color: white; text-align: center; padding: 16px; border-radius: 15px; text-decoration: none; margin-top: 25px; font-weight: 600; }
+        .modal-title { font-family: 'Noto Serif TC', serif; font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid #F0F0F0; padding-bottom: 15px; }
+        .modal-body { font-size: 14px; line-height: 1.8; color: #555; white-space: pre-line; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #DDD; }
+
+        /* 預約票券卡 */
+        .ticket-card { background: #FCFBF9; border: 1px dashed #DDD; border-radius: 12px; padding: 15px; margin: 15px 0; }
+        .t-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
+        .t-val { font-weight: 600; color: var(--accent); }
+        
+        .btn-map { display: block; background: var(--primary); color: white; text-align: center; padding: 15px; border-radius: 12px; text-decoration: none; margin-top: 25px; font-weight: 600; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <img src="https://images.unsplash.com/photo-1590559063416-86d3824f2162?auto=format&fit=crop&q=80&w=1000" alt="Osaka" class="hero-image">
-
-    <div class="header">
-        <div class="sub-h">Day 01 · 4/14 Tue</div>
-        <h1>小陳旅行社 · 心齋橋攻略</h1>
+    <div class="app-header">
+        <span>小陳旅行社 · 2026</span>
+        <h1>大阪五天四夜手帖</h1>
     </div>
 
-    <div class="weather-section">
+    <div class="weather-scroll-container">
+        <div class="weather-title">OSAKA HOURLY WEATHER</div>
         <div class="hourly-scroll" id="hourlyWeather">讀取中...</div>
+    </div>
+
+    <div class="date-bar">
+        <div class="date-item active">4/14<br><span>(二)</span></div>
+        <div class="date-item">4/15<br><span>(三)</span></div>
+        <div class="date-item">4/16<br><span>(四)</span></div>
+        <div class="date-item">4/17<br><span>(五)</span></div>
+        <div class="date-item">4/18<br><span>(六)</span></div>
     </div>
 
     <div class="container">
         <div class="timeline">
-            <div class="item" onclick="openModal('民宿入住指引', '🏨 日居大正一号館\n● 提醒：6人入住，行李請務必整齊放置玄關。\n● 房東叮嚀：拍照回傳確認入住狀態。 [cite: 11-13, 16]', 'https://goo.gl/maps/A6p8i3vF6u65jD6b7', null)">
+            <div class="item" onclick="openModal('✈️ 航班資訊', '桃園機場 T2 (TPE) ⭢ 關西機場 T1 (KIX)\n🛫 IT210 起飛：06:40\n🛬 IT210 抵達：10:24 [cite: 5-7]', '', null)">
+                <div class="item-time">06:40</div>
+                <div class="item-content">
+                    <span class="item-label">Departure</span>
+                    <h2 class="item-title">虎航 IT210 出發</h2>
+                </div>
+            </div>
+
+            <div class="item" onclick="openModal('🏨 民宿入住', '日居大正一号館\n● 交通：南海地鐵直達大正站。\n● 提醒：6人入住空間分配注意，行李放玄關需拍照回傳。 [cite: 11-13, 16]', 'https://goo.gl/maps/A6p8i3vF6u65jD6b7', null)">
                 <div class="item-time">12:00</div>
                 <div class="item-content">
                     <span class="item-label">Check-in</span>
-                    <h2 class="item-title">日居大正一号館 [cite: 8]</h2>
+                    <h2 class="item-title">日居大正一号館</h2>
                 </div>
             </div>
 
-            <div class="item" onclick="openModal('心齋橋必逛攻略', '🏢 大丸百貨 (Daimaru)：\n- 9F：寶可夢中心 [cite: 22]\n🏢 PARCO (與大丸連通)：\n- 6F：吉伊卡哇Land、CAPCOM [cite: 23]\n- 其他：@cosme (美妝)、3Coins (雜貨) [cite: 23]\n🍴 午餐：Shake Shack 漢堡 [cite: 18, 19]', 'https://app.goo.gl/xS7D', null)">
+            <div class="item" onclick="openModal('🛍️ 心齋橋購物攻略', '🏢 大丸百貨 (Daimaru)：\n- 9F：寶可夢中心 [cite: 22]\n🏢 PARCO (連通)：\n- 6F：吉伊卡哇Land、CAPCOM [cite: 23]\n- 其他：@cosme美妝、3Coins雜貨、Muji', 'https://app.goo.gl/xS7D', null)">
                 <div class="item-time">14:00</div>
                 <div class="item-content">
                     <span class="item-label">Shopping</span>
-                    <h2 class="item-title">大丸 & PARCO 攻略 [cite: 22-24]</h2>
-                    <span class="shop-chip chip-anime">吉伊卡哇</span>
-                    <span class="shop-chip chip-anime">寶可夢</span>
-                    <span class="shop-chip chip-beauty">@cosme</span>
+                    <h2 class="item-title">大丸 & PARCO 攻略</h2>
+                    <div class="tag">吉伊卡哇</div><div class="tag">寶可夢</div><div class="tag">3Coins</div>
                 </div>
             </div>
 
-            <div class="item" onclick="openModal('心齋橋小吃指南', '📍 章魚燒：甲賀流 (美國村)\n📍 烤糰子：心齋橋商店街內多處現烤小店。\n這區有很多日牌服飾，25-35歲女性最愛的品牌都在這！', '')">
-                <div class="item-time">16:00</div>
-                <div class="item-content">
-                    <span class="item-label">Street Food</span>
-                    <h2 class="item-title">章魚燒與烤糰子時間</h2>
-                    <span class="shop-chip chip-food">章魚燒</span>
-                    <span class="shop-chip chip-food">烤糰子</span>
-                </div>
-            </div>
-
-            <div class="item" onclick="openModal('蔬菜串燒 Naruto ya', '已預約 17:30 [cite: 26]\nYasai Kushimaki Naruto ya Ao [cite: 27]\n口感清爽，深受女性歡迎！', 'https://app.goo.gl/zL6v7', {time: '17:30', code: 'NRT-0414-6P', people: '6位 大人'})">
+            <div class="item" onclick="openModal('🍴 晚餐預約', '蔬菜串燒 Naruto ya\n主打清爽蔬菜捲，女生評價極高！ [cite: 26-27]', 'https://app.goo.gl/zL6v7', {time:'17:30', code:'NRT-0414-6P', num:'6位'})">
                 <div class="item-time">17:30</div>
                 <div class="item-content">
                     <span class="item-label">Dinner</span>
-                    <h2 class="item-title">蔬菜串燒 <span style="color:var(--accent);">予約済</span> [cite: 26]</h2>
+                    <h2 class="item-title">蔬菜串燒 <span class="stamp">預約済</span></h2>
                 </div>
             </div>
         </div>
@@ -116,15 +120,15 @@
 
     <div id="modal" class="modal-overlay" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-x" onclick="closeModal()">×</span>
+            <span class="close-btn" onclick="closeModal()">×</span>
             <div id="m-title" class="modal-title"></div>
-            <div id="booking-box" class="booking-card" style="display:none;">
-                <div class="booking-row"><span>預約時間</span><span id="b-time" class="booking-val"></span></div>
-                <div class="booking-row"><span>確認代碼</span><span id="b-code" class="booking-val"></span></div>
-                <div class="booking-row"><span>預約人數</span><span id="b-people" class="booking-val"></span></div>
+            <div id="ticket-area" class="ticket-card" style="display:none;">
+                <div class="t-row"><span>預約時間</span><span id="t-time" class="t-val"></span></div>
+                <div class="t-row"><span>確認代碼</span><span id="t-code" class="t-val"></span></div>
+                <div class="t-row"><span>人數</span><span id="t-num" class="t-val"></span></div>
             </div>
-            <div id="m-body" style="font-size:14px; line-height:1.8; white-space:pre-line; color:#555;"></div>
-            <a id="m-map" href="#" class="btn-map" target="_blank">📍 開啟 Google Maps</a>
+            <div id="m-body" class="modal-body"></div>
+            <a id="m-map" href="#" class="btn-map" target="_blank">📍 開啟 Google Maps 導航</a>
         </div>
     </div>
 
@@ -144,18 +148,18 @@
                 }
             } catch (e) { scroll.innerHTML = '氣象加載中...'; }
         }
-        function openModal(t, b, m, book) {
-            document.getElementById('m-title').innerText = t;
-            document.getElementById('m-body').innerText = b;
-            const box = document.getElementById('booking-box');
-            if(book) {
-                box.style.display = 'block';
-                document.getElementById('b-time').innerText = book.time;
-                document.getElementById('b-code').innerText = book.code;
-                document.getElementById('b-people').innerText = book.people;
-            } else { box.style.display = 'none'; }
+        function openModal(title, body, map, ticket) {
+            document.getElementById('m-title').innerText = title;
+            document.getElementById('m-body').innerText = body;
+            const area = document.getElementById('ticket-area');
+            if(ticket) {
+                area.style.display = 'block';
+                document.getElementById('t-time').innerText = ticket.time;
+                document.getElementById('t-code').innerText = ticket.code;
+                document.getElementById('t-num').innerText = ticket.num;
+            } else { area.style.display = 'none'; }
             const btn = document.getElementById('m-map');
-            if(m) { btn.href = m; btn.style.display = 'block'; } else { btn.style.display = 'none'; }
+            if(map) { btn.href = map; btn.style.display = 'block'; } else { btn.style.display = 'none'; }
             document.getElementById('modal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
