@@ -9,153 +9,140 @@
     <style>
         :root { --bg: #FDFCF8; --line: #E5E2D9; --primary: #333; --accent: #C88F8F; --sub: #888; }
         body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); margin: 0; color: var(--primary); -webkit-font-smoothing: antialiased; }
+        
+        /* Header */
         .header { text-align: center; padding: 40px 20px 10px; }
-        .sub-h { font-size: 10px; letter-spacing: 4px; color: var(--sub); text-transform: uppercase; margin-bottom: 8px; }
-        h1 { font-family: 'Noto Serif TC', serif; font-size: 1.6rem; margin: 0; font-weight: 600; }
-        .date-bar { display: flex; justify-content: center; gap: 12px; margin: 25px 0 10px; border-bottom: 1px solid #EEE; padding-bottom: 15px; overflow-x: auto; }
-        .date-item { text-align: center; font-size: 11px; color: #BBB; cursor: pointer; min-width: 45px; }
-        .date-item.active { color: var(--primary); font-weight: 600; }
-        .date-item.active span { border-bottom: 2px solid var(--accent); padding-bottom: 4px; color: var(--accent); }
-        .container { padding: 25px 25px 150px; position: relative; }
+        .sub-h { font-size: 10px; letter-spacing: 4px; color: var(--sub); text-transform: uppercase; }
+        h1 { font-family: 'Noto Serif TC', serif; font-size: 1.6rem; margin: 10px 0; font-weight: 600; }
+        
+        /* Tabs */
+        .date-bar { display: flex; justify-content: center; gap: 10px; margin: 20px 0; border-bottom: 1px solid #EEE; padding-bottom: 15px; overflow-x: auto; }
+        .date-item { text-align: center; font-size: 11px; color: #BBB; cursor: pointer; min-width: 50px; }
+        .date-item.active { color: var(--accent); font-weight: 600; }
+        .date-item.active span { border-bottom: 2px solid var(--accent); padding-bottom: 4px; }
+
+        .container { padding: 20px 25px 120px; }
         .timeline { position: relative; display: none; }
         .timeline.active { display: block; }
         .timeline::before { content: ''; position: absolute; left: 52px; top: 0; bottom: 0; width: 1px; background: var(--line); }
-        .item { position: relative; padding-left: 75px; margin-bottom: 40px; cursor: pointer; } /* 增加手勢 */
+
+        /* Items */
+        .item { position: relative; padding-left: 75px; margin-bottom: 40px; cursor: pointer; }
         .item-time { position: absolute; left: 0; font-family: 'Noto Serif TC', serif; font-size: 1.1rem; color: var(--primary); font-weight: 500; }
         .item-time::after { content: '°'; font-size: 10px; vertical-align: super; margin-left: 2px; }
-        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 600; margin: 0 0 4px 0; }
+        .item-title { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; font-weight: 600; margin: 0; line-height: 1.4; }
         .item-label { font-size: 9px; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; display: block; }
         .stamp { border: 1.2px solid var(--accent); color: var(--accent); padding: 1px 5px; font-size: 9px; border-radius: 3px; transform: rotate(-8deg); display: inline-block; margin-left: 8px; font-weight: bold; }
-        
-        /* 彈窗樣式 (Modal) */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 3000; align-items: center; justify-content: center; }
-        .modal-content { background: white; width: 85%; max-height: 80%; border-radius: 20px; padding: 25px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease; }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #CCC; cursor: pointer; }
-        .modal-body { font-size: 14px; line-height: 1.8; color: #555; white-space: pre-line; }
-        .modal-title { font-family: 'Noto Serif TC', serif; font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid #EEE; padding-bottom: 10px; color: var(--primary); }
-        .btn-map { display: inline-block; background: var(--primary); color: white; padding: 10px 20px; border-radius: 10px; text-decoration: none; margin-top: 20px; font-size: 14px; }
-        
-        .floating-focus { position: fixed; bottom: 25px; left: 20px; right: 20px; background: white; border-radius: 18px; padding: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; z-index: 2000; }
+
+        /* Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-content { background: white; width: 88%; max-height: 85%; border-radius: 24px; padding: 30px; overflow-y: auto; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 28px; color: #DDD; }
+        .modal-body { font-size: 14px; line-height: 1.8; color: #555; white-space: pre-line; margin-top: 15px; }
+        .modal-title { font-family: 'Noto Serif TC', serif; font-size: 1.4rem; color: var(--primary); border-bottom: 1px solid #F0F0F0; padding-bottom: 15px; }
+        .btn-map { display: block; background: var(--primary); color: white; text-align: center; padding: 12px; border-radius: 12px; text-decoration: none; margin-top: 25px; font-weight: 600; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div class="sub-h">OSAKA · KYOTO 2026</div>
+        <div class="sub-h">Travel to Japan 2026</div>
         <h1>小陳旅行社 大阪五天四夜</h1>
-        <div class="date-bar">
-            <div class="date-item active" onclick="switchDay('day1', this)">4/14<br><span>(二)</span></div>
-            <div class="date-item" onclick="switchDay('day2', this)">4/15<br><span>(三)</span></div>
-            <div class="date-item" onclick="switchDay('day3', this)">4/16<br><span>(四)</span></div>
-            <div class="date-item" onclick="switchDay('day4', this)">4/17<br><span>(五)</span></div>
-            <div class="date-item" onclick="switchDay('day5', this)">4/18<br><span>(六)</span></div>
-            <div class="date-item" onclick="switchDay('info', this)">INFO<br><span>🧳</span></div>
+        <div class="date-bar" id="dateBar">
+            <div class="date-item active" onclick="showDay('day1')">4/14<br><span>(二)</span></div>
+            <div class="date-item" onclick="showDay('day2')">4/15<br><span>(三)</span></div>
+            <div class="date-item" onclick="showDay('day3')">4/16<br><span>(四)</span></div>
+            <div class="date-item" onclick="showDay('day4')">4/17<br><span>(五)</span></div>
+            <div class="date-item" onclick="showDay('day5')">4/18<br><span>(六)</span></div>
         </div>
     </div>
 
-    <div class="container">
-        <div id="day1" class="timeline active">
-            <div class="item" onclick="openModal('IT210 航班資訊', '桃園機場 T2 (TPE) → 關西機場 T1 (KIX)\n🛫 起飛：06:40\n🛬 抵達：10:24', '')">
-                <div class="item-time">06:40</div>
-                <div class="item-content">
-                    <span class="item-label">FLIGHT</span>
-                    <h2 class="item-title">出發 IT210</h2>
-                </div>
-            </div>
-            <div class="item" onclick="openModal('日居大正一号館', '住宿備註：\n1. 南海地鐵 關西機場 ⭢ 大阪環狀 (52分)\n2. 行李請先放玄關，務必拍照回傳給房東確認。', 'https://goo.gl/maps/A6p8i3vF6u65jD6b7')">
-                <div class="item-time">12:00</div>
-                <div class="item-content">
-                    <span class="item-label">ACCOMMODATION</span>
-                    <h2 class="item-title">民宿 Check-in</h2>
-                </div>
-            </div>
-            <div class="item" onclick="openModal('心齋橋市區攻略', '🍴 午餐：Shake Shack 漢堡\n🛍️ 大丸百貨：agete、寶可夢中心\n🛍️ PARCO：吉伊卡哇land、cosme、無印良品\n💡 兩間百貨有空橋互通，逛街超方便！', 'https://app.goo.gl/xS7D')">
-                <div class="item-time">14:00</div>
-                <div class="item-content">
-                    <span class="item-label">FOOD & SHOP</span>
-                    <h2 class="item-title">心齋橋 / 大丸百貨</h2>
-                </div>
-            </div>
-            <div class="item" onclick="openModal('蔬菜串燒 Naruto ya', '已預約 17:30\nYasai Kushimaki Naruto ya Ao\n這是一家非常有名的蔬菜捲串燒店，記得準時赴約喔！', 'https://app.goo.gl/zL6v7')">
-                <div class="item-time">17:30</div>
-                <div class="item-content">
-                    <span class="item-label">DINNER</span>
-                    <h2 class="item-title">蔬菜串燒 <span class="stamp">予約済</span></h2>
-                </div>
-            </div>
-        </div>
-
-        <div id="day2" class="timeline">
-            <div class="item" onclick="openModal('環球影城設施攻略', '⭐️ 任天堂園區 (11:00-12:00)\n- 庫帕的挑戰\n- 咚奇剛瘋狂礦車 (已預約 11:00)\n⭐️ 哈利波特：禁忌之旅 (快通)\n⭐️ 咒術迴戰 Real 4-D (迎轉鐘塔)\n⭐️ 魔物獵人：賽利亞納食堂「超真實貓飯」', 'https://app.goo.gl/tU5J')">
-                <div class="item-time">09:00</div>
-                <div class="item-content">
-                    <span class="item-label">USJ</span>
-                    <h2 class="item-title">環球影城全日攻略</h2>
-                </div>
-            </div>
-            <div class="item" onclick="openModal('燒肉內臟 Tokuchan', '野田店\n結束影城行程後，搭乘夢咲線 ⭢ 西九條 ⭢ 野田 (25分)。', 'https://app.goo.gl/97N')">
-                <div class="item-time">19:30</div>
-                <div class="item-content">
-                    <span class="item-label">DINNER</span>
-                    <h2 class="item-title">燒肉 Tokuchan</h2>
-                </div>
-            </div>
-        </div>
-
-        <div id="day3" class="timeline">
-            <div class="item" onclick="openModal('敘敘苑 JR京都伊勢丹', '已預約 11:00\n位於伊勢丹百貨 7F，可以一邊吃燒肉一邊看京都風景。', 'https://app.goo.gl/jjo')">
-                <div class="item-time">11:00</div>
-                <div class="item-content">
-                    <span class="item-label">KYOTO LUNCH</span>
-                    <h2 class="item-title">敘敘苑燒肉 <span class="stamp">予約済</span></h2>
-                </div>
-            </div>
-            <div class="item" onclick="openModal('下鴨神社御守清單', '⛩️ 必買推薦：\n- 蕾絲御守：開運與淨化身心\n- 媛守：女性專用，祈求結緣變美\n- 水守：透明設計，消災解厄\n- 相の環守：戒指造型的守護。', 'maps.google.com')">
-                <div class="item-time">14:00</div>
-                <div class="item-content">
-                    <span class="item-label">SHRINE</span>
-                    <h2 class="item-title">下鴨神社與御守</h2>
-                </div>
-            </div>
-        </div>
-
-        <div id="info" class="timeline">
-             <div class="item" onclick="openModal('京都公車禮儀', '1. 勿大聲喧嘩\n2. 下車記得按鈴\n3. 後門上車，前門感應/付費下車\n4. 上車後請往車頭或車尾移動，留空間給其他乘客。', '')">
-                <div class="item-time">Tips</div>
-                <div class="item-content">
-                    <h2 class="item-title">京都巴士使用守則</h2>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="container" id="timelineContainer"></div>
 
     <div id="modal" class="modal-overlay" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <span class="close-modal" onclick="closeModal()">×</span>
             <div id="m-title" class="modal-title"></div>
             <div id="m-body" class="modal-body"></div>
-            <a id="m-map" href="#" class="btn-map" target="_blank">開啟 Google Maps 導航</a>
+            <a id="m-map" href="#" class="btn-map" target="_blank">📍 開啟 Google Maps 導航</a>
         </div>
     </div>
 
     <script>
+        // 【資料庫】將備忘錄內容完整置入
+        const itinerary = {
+            day1: [
+                { time: '06:40', label: 'FLIGHT', title: '出發 IT210', desc: '桃園機場 T2 (TPE) ⭢ 關西機場 T1 (KIX)\n🛫 起飛：06:40\n🛬 抵達：10:24', map: '' },
+                { time: '12:00', label: 'ACCOMMODATION', title: '日居大正一号館', desc: '🚇 南海地鐵 關西機場 ⭢ 大阪環狀 (52分)\n⚠️ 行李放玄關，務必拍照回傳給房東確認。', map: 'https://goo.gl/maps/A6p8i3vF6u65jD6b7' },
+                { time: '14:00', label: 'CITY WALK', title: '心齋橋市區攻略', desc: '➊ Shake Shack 漢堡 (大丸百貨 1F)\n➋ 大丸百貨：agete、寶可夢中心\n➌ PARCO：吉伊卡哇land、cosme、無印良品\n💡 兩百貨有空橋互通。', map: 'https://app.goo.gl/xS7D' },
+                { time: '17:30', label: 'DINNER', title: '蔬菜串燒 Naruto ya', stamp: '予約済', desc: '已預約 17:30\nYasai Kushimaki Naruto ya Ao\n這是一家必吃的蔬菜捲串燒店！', map: 'https://app.goo.gl/zL6v7' }
+            ],
+            day2: [
+                { time: '09:00', label: 'USJ', title: '日本環球影城 (已訂票)', desc: '📍預測人數與APP下載點此\n🎟️門票與快通已準備好\n重點設施：\n- 咒術迴戰 Real 4-D\n- 飛天翼龍、侏羅紀乘車遊\n- 小小兵瘋狂乘車遊 (有快通)', map: 'https://app.goo.gl/tU5J' },
+                { time: '11:00', label: 'NINTENDO', title: '任天堂園區預約', stamp: '予約済', desc: '11:00-11:30 咚奇剛瘋狂礦車\n- 瑪莉歐賽車~庫帕的挑戰\n- 耀西冒險 (小孩設施)\n🍴 奇諾比奧咖啡 / 耀西炒麵麵包\n🛍️ 必買：無敵星星爆米花桶、能量手環', map: '' },
+                { time: '13:00', label: 'THEME FOOD', title: '魔物獵人：賽利亞納食堂', desc: '主打「超真實貓飯」的主題餐廳。\n還原度極高的獵人餐點，艾路貓會出來互動拍照！', map: '' },
+                { time: '15:00', label: 'HARRY POTTER', title: '哈利波特園區', desc: '- 禁忌之旅 (有快通)\n- 鷹馬的飛行\n🍴 必吃：三根掃帚、奶油啤酒\n🛍️ 商店：蜂蜜公爵、奧利凡德魔杖店', map: '' },
+                { time: '19:30', label: 'DINNER', title: '燒肉 Tokuchan 野田店', desc: '焼肉ホルモンとくちゃん野田店\n🚇 影城 ⭢ 西九條 ⭢ 野田 (25分)', map: 'https://app.goo.gl/97N' }
+            ],
+            day3: [
+                { time: '11:00', label: 'LUNCH', title: '敘敘苑 JR京都伊勢丹', stamp: '予約済', desc: '已預約 11:00\n位於伊勢丹百貨 7F，視野極佳。', map: 'https://app.goo.gl/jjo' },
+                { time: '14:00', label: 'SHRINE', title: '下鴨神社 完整御守清單', desc: '⛩️ 必買御守：\n- 蕾絲御守：開運與淨化身心\n- 媛守：女性專用(變美/結緣)\n- 彥守：丹寧布製(事業)\n- 水守：透明設計(消災解厄)\n- 八咫烏除厄御守：驅散惡意\n- 相の環守：戒指造型', map: 'maps.google.com' },
+                { time: '18:00', label: 'DINNER', title: '京都 かに銀 螃蟹料理', desc: 'Kyoto KANI-GIN Kawaramachi Store\n位於河原町三條，品嚐頂級螃蟹。', map: 'https://app.goo.gl/kng' },
+                { time: 'INFO', label: 'BUS ETIQUETTE', title: '京都公車禮儀 (必看)', desc: '1. 公車上請勿大聲喧嘩🤫\n2. 下車站沒人按鈴，請務必「按下車鈴」🔔\n3. 司機見到有人會主動停，不用招手👍🏻\n4. 後門上車，前門感應/付費下車🙌🏻', map: '' }
+            ],
+            day4: [
+                { time: '09:00', label: 'MARKET', title: '木津市場海鮮', desc: '大阪傳統市場，適合品嚐新鮮海鮮與水果。', map: 'maps.google.com' },
+                { time: '14:00', label: 'CAFE', title: 'LOUTRE 水獺咖啡廳', desc: '大阪千日前店，下午兩點營業，無法預約。', map: 'maps.google.com' },
+                { time: '18:00', label: 'DINNER', title: '天星 (天婦羅專門)', desc: '⚠️ 重要規定：\n請穿著半正式休閒服裝。\n禁止短褲、拖鞋、涼鞋、運動服、T恤或吊帶背心。', map: 'https://app.goo.gl/tsb' },
+                { time: '20:30', label: 'RELAX', title: '空庭溫泉', desc: '營業到 23:00，適合消除整天疲勞。', map: 'https://app.goo.gl/k庭' }
+            ],
+            day5: [
+                { time: '11:00', label: 'LUNCH', title: 'うなぎの中庄 鰻魚飯', desc: '心齋橋店，品嚐正宗日式鰻魚。', map: 'https://app.goo.gl/nak' },
+                { time: '13:00', label: 'CHARTER', title: '包車前往臨空城 OUTLET', desc: '🚗 已預約 13:00 包車前往。\n最後血拼時間！', map: 'https://app.goo.gl/rku' },
+                { time: '17:00', label: 'RETURN', title: '返程：關西機場 T1', desc: '🛄 17:00 前抵達。\n🛫 IT213 起飛：19:15\n💡 記得去 Studio Gifts 辦理退稅！', map: 'https://app.goo.gl/kix' }
+            ]
+        };
+
+        function renderTimeline(dayId) {
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = `<div id="${dayId}" class="timeline active"></div>`;
+            const timelineDiv = container.firstChild;
+
+            itinerary[dayId].forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.onclick = () => openModal(item.title, item.desc, item.map);
+                
+                itemDiv.innerHTML = `
+                    <div class="item-time">${item.time}</div>
+                    <div class="item-content">
+                        <span class="item-label">${item.label}</span>
+                        <h2 class="item-title">${item.title} ${item.stamp ? `<span class="stamp">${item.stamp}</span>` : ''}</h2>
+                    </div>
+                `;
+                timelineDiv.appendChild(itemDiv);
+            });
+        }
+
+        function showDay(dayId) {
+            renderTimeline(dayId);
+            document.querySelectorAll('.date-item').forEach(d => d.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function openModal(title, body, mapUrl) {
             document.getElementById('m-title').innerText = title;
             document.getElementById('m-body').innerText = body;
-            const mapBtn = document.getElementById('m-map');
-            if(mapUrl) { mapBtn.href = mapUrl; mapBtn.style.display = 'inline-block'; } 
-            else { mapBtn.style.display = 'none'; }
+            const btn = document.getElementById('m-map');
+            if(mapUrl) { btn.href = mapUrl; btn.style.display = 'block'; } else { btn.style.display = 'none'; }
             document.getElementById('modal').style.display = 'flex';
         }
+
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
-        function switchDay(dayId, btn) {
-            document.querySelectorAll('.timeline').forEach(t => t.classList.remove('active'));
-            document.getElementById(dayId).classList.add('active');
-            document.querySelectorAll('.date-item').forEach(d => d.classList.remove('active'));
-            btn.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+
+        // 預設載入第一天
+        renderTimeline('day1');
     </script>
 </body>
 </html>
