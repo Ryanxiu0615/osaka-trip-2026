@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇯🇵 大阪旅遊助手 2026</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root { --bg: #FDFCF8; --text: #4A4A4A; --primary: #8E9775; --accent: #E28E8E; --card: #FFFFFF; }
+        body { font-family: "PingFang TC", sans-serif; background: var(--bg); margin: 0; padding: 15px; color: var(--text); line-height: 1.6; }
+        .day-box { background: var(--card); border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #EAEAEA; }
+        h2 { color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-top: 0; }
+        .event { margin-bottom: 15px; padding-left: 10px; border-left: 3px solid var(--primary); }
+        .tag { font-size: 12px; padding: 2px 8px; border-radius: 10px; background: #F0F0F0; margin-right: 5px; font-weight: bold; }
+        .food { color: #D97706; background: #FEF3C7; }
+        .trans { color: #059669; background: #D1FAE5; }
+        .important { color: var(--accent); font-weight: bold; }
+        .nav-btn { display: inline-block; background: var(--primary); color: white; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-size: 14px; margin-top: 5px; }
+        .sticky-nav { position: sticky; top: 10px; background: rgba(255,255,255,0.9); padding: 10px; border-radius: 20px; display: flex; overflow-x: auto; gap: 10px; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-item { flex-shrink: 0; padding: 5px 15px; background: #EEE; border-radius: 15px; font-size: 14px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🇯🇵 2026 日本大阪行</h1>
+    
+    <div class="sticky-nav">
+        <div class="nav-item">Day 1</div><div class="nav-item">Day 2</div><div class="nav-item">Day 3</div><div class="nav-item">Day 4</div><div class="nav-item">Day 5</div>
+    </div>
+
+    <div class="day-box">
+        <h2>Day 1: 4/14(二) 心齋橋</h2>
+        <p>✈️ 航班 IT210: 06:40 起飛 [cite: 6]</p>
+        <div class="event">
+            <span class="tag trans">交通</span> 10:24 抵達關西機場 T1 [cite: 7]
+        </div>
+        <div class="event">
+            <span class="tag">住宿</span> 日居大正一号館 [cite: 8]
+            <br><a href="https://app.goo.gl/yYvP3" class="nav-btn">📍 Google Maps 導航</a>
+        </div>
+        <div class="event">
+            <span class="tag food">午餐</span> Shake Shack 大丸心齋橋 [cite: 18]
+        </div>
+        <div class="event">
+            <span class="tag food">晚餐</span> 蔬菜串燒 Naruto ya <span class="important">(預約 17:30)</span> [cite: 26]
+        </div>
+    </div>
+
+    <div class="day-box">
+        <h2>Day 2: 4/15(三) 環球影城</h2>
+        <div class="event">
+            <span class="important">必看行程：</span> 咒術迴戰、瑪利歐賽車 [cite: 50, 54]
+        </div>
+        <div class="event">
+            <span class="tag food">餐廳</span> 推薦：賽利亞納食堂(貓飯)、奇諾比奧咖啡 [cite: 52, 58]
+        </div>
+        <div class="event">
+            <span class="tag food">晚餐</span> 燒肉內臟 Tokuchan 野田店 [cite: 96]
+        </div>
+    </div>
+
+    <div class="day-box">
+        <h2>Day 3: 4/16(四) 京都文化</h2>
+        <div class="event">
+            <span class="tag food">午餐</span> 敘敘苑 JR京都伊勢丹店 <span class="important">(預約 11:00)</span> [cite: 117]
+        </div>
+        <div class="event">
+            <span class="tag">景點</span> 下鴨神社 (必買蕾絲御守) [cite: 122, 126]
+        </div>
+    </div>
+
+    <div class="day-box">
+        <h2>Day 4: 4/17(五) 木津市場·梅田</h2>
+        <div class="event">
+            <span class="tag food">餐廳</span> 天星(天婦羅) <span class="important">(⚠️ 禁止穿短褲拖鞋)</span> [cite: 160, 164]
+        </div>
+        <div class="event">
+            <span class="tag">放鬆</span> 空庭溫泉 (營業至 23:00) [cite: 166]
+        </div>
+    </div>
+
+    <div class="day-box">
+        <h2>Day 5: 4/18(六) 臨空城·返程</h2>
+        <div class="event">
+            <span class="tag food">午餐</span> うなぎの中庄 鰻魚飯 [cite: 182]
+        </div>
+        <div class="event">
+            <span class="tag trans">包車</span> 13:00 前往臨空城 Outlet [cite: 186, 187]
+        </div>
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
