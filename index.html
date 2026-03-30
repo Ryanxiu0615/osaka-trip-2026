@@ -58,8 +58,8 @@
 <body>
 
     <div class="app-header">
-        <div class="header-top">OSAKA TRIP</div>
-        <div class="header-title">大阪五天四夜 <span class="header-year">2026</span></div>
+        <div class="header-top">OSAKA SHOPPING</div>
+        <div class="header-title">大阪手帖 <span class="header-year">2026</span></div>
     </div>
 
     <div class="weather-scroll" id="hourlyWeather">讀取中...</div>
@@ -78,12 +78,12 @@
 
     <div class="focus-card">
         <div style="flex:1; border-right:1px solid #EEE; padding-right:15px;">
-            <div style="font-family:'Noto Serif TC', serif; font-size:1.35rem;">12:00 <span style="font-size:10px; color:#999; margin-left:8px; font-weight:normal;">NEXT</span></div>
-            <div style="font-size:14px; font-weight:600; margin-top:5px;">午餐：Shake Shack 漢堡</div>
+            <div style="font-family:'Noto Serif TC', serif; font-size:1.35rem;">14:00 <span style="font-size:10px; color:#999; margin-left:8px; font-weight:normal;">NEXT</span></div>
+            <div style="font-size:14px; font-weight:600; margin-top:5px;">心齋橋商圈全攻略</div>
         </div>
         <div style="flex:0 0 80px; text-align:center; padding-left:10px;">
             <div style="font-size:10px; color:#999;">地點</div>
-            <div style="font-size:12px; font-weight:600;">大丸 1F</div>
+            <div style="font-size:12px; font-weight:600;">Shinsaibashi</div>
         </div>
     </div>
 
@@ -93,7 +93,7 @@
             <div style="font-size:10px; color:var(--accent); font-weight:700; letter-spacing:1px;" id="m-category"></div>
             <h2 id="m-title" style="font-family:'Noto Serif TC', serif; font-size:1.5rem; margin:10px 0;"></h2>
             <div class="blogger-tip" id="m-blogger-tip"></div>
-            <div style="font-size:11px; color:var(--sub); border-bottom:1px solid #F0F0F0; padding-bottom:5px; margin:20px 0 12px;">導遊深度建議 (INSIDER TIPS)</div>
+            <div style="font-size:11px; color:var(--sub); border-bottom:1px solid #F0F0F0; padding-bottom:5px; margin:20px 0 12px;">深度導遊建議 (INSIDER TIPS)</div>
             <div id="m-info-grid"></div>
             <a id="m-map" href="#" class="btn-map">📍 開啟 Google Maps 導航</a>
         </div>
@@ -103,46 +103,46 @@
         const guideData = {
             flight: {
                 category: "FLIGHT", title: "星宇航空 IT210", 
-                bloggerTip: "<b>導遊叮嚀：</b>IT210 預計 10:24 抵達。如果是搭乘星宇，關西機場 T1 入境後直接左轉二樓就是南海電鐵，非常快速！",
+                bloggerTip: "<b>導遊叮嚀：</b>IT210 預計 10:24 抵達。如果是搭乘星宇，關西機場 T1 入境後直接左轉二樓就是南海電鐵，非常快速！記得提早準備好 VJW 截圖以免現場網路卡頓。",
                 list: [
-                    { main: "入境攻略", sub: "建議下機後快步移動，關西機場入境排隊人潮極多" },
-                    { main: "VJW 截圖", sub: "記得提前準備好 Visit Japan Web 入境 QR Code" }
+                    { main: "入境攻略", sub: "關西機場 T1 2F 直接連通南海電鐵站" },
+                    { main: "VJW QR Code", sub: "入境審查與海關申報，建議分開截圖" }
                 ], map: ""
             },
             lunch: {
                 category: "FOOD", title: "午餐：Shake Shack", 
-                bloggerTip: "<b>導遊私藏：</b>除了經典漢堡，大丸店有推出大阪限定的<b>『心齋橋奶昔』</b>。如果是 6 人團，一樓座位區較擁擠，可考慮外帶去旁邊的小桌區吃，或是分兩桌坐。",
+                bloggerTip: "<b>導遊推薦：</b>這家店位於大丸心齋橋 1 樓，採光超好。推薦點<b>『心齋橋限定奶昔』</b>。如果是 6 人，建議分組找位子比較快，漢堡現點現做要有等待 15 分鐘的心理準備。",
                 list: [
-                    { main: "ShackBurger", sub: "招牌安格斯牛肉起司堡" },
-                    { main: "心齋橋限定奶昔", sub: "只有這間分店才喝得到的限定口味" }
+                    { main: "ShackBurger", sub: "經典中的經典，安格斯牛肉起司堡" },
+                    { main: "心齋橋限定奶昔", sub: "這間店獨有的口味，拍照打卡首選" }
                 ], map: "https://app.goo.gl/xS7D"
             },
             shopping: {
-                category: "SHOPPING", title: "大丸百貨 & PARCO 攻略", 
-                bloggerTip: "<b>重要退稅陷阱：</b>大丸與 PARCO 雖然連通，但<b>退稅是分開辦理的！</b>在大丸買的要去大丸 4F，PARCO 買的則是在 PARCO 櫃位或指定櫃檯，不能合併計算喔！",
+                category: "GUIDE", title: "心齋橋商圈全攻略", 
+                bloggerTip: "<b>導遊秘技：</b>除了大丸/PARCO，心齋橋筋商店街才是主戰場。這區藥妝價差大，<b>松本清</b>跟<b>Sun Drug</b>就在隔壁可以比價。想拍美照要去<b>美國村三角公園</b>，吃最有名的甲賀流章魚燒。",
                 list: [
-                    { main: "Bâton d'or (大丸 B1)", sub: "台灣人瘋搶！Pocky 界的愛馬仕，必買伴手禮" },
-                    { main: "WPC 傘 (PARCO 5F)", sub: "極致輕量遮陽傘，日雜模特兒人手一支" },
-                    { main: "吉伊卡哇 Land (PARCO 6F)", sub: "全大阪最紅，有限購規定，建議先衝" },
-                    { main: "空橋撇步", sub: "兩館 2F、7F、10F 都有連通橋，逛累了隨時換棟" }
-                ], map: "https://app.goo.gl/xS7D"
+                    { main: "Strawberry Mania (必買)", sub: "超浮誇草莓甜點店，台灣女生瘋傳的打卡聖地" },
+                    { main: "美國村 (Amemura)", sub: "大阪的西門町/原宿，古著店與街頭文化集中地" },
+                    { main: "藥妝激戰區", sub: "心齋橋筋內的松本清、Sun Drug 是比價首選區" },
+                    { main: "Sanrio & Disney Store", sub: "旗艦級門市，很多日本限定的周邊商品" },
+                    { main: "Bâton d'or (大丸 B1)", sub: "Pocky 界的愛馬仕，帶回台灣送禮超有面子" }
+                ], map: "https://app.goo.gl/shinsaibashi"
             },
-            hotel: {
-                category: "HOTEL", title: "民宿：日居大正一号館", 
-                bloggerTip: "<b>導遊在地推薦：</b>大正站出口就有<b>大國藥妝</b>（比心齋橋便宜！）。附近還有<b>『Tugboat Taisho』</b>，晚上這組貨櫃市集在河邊非常漂亮，適合姊妹喝點調酒、吃烤肉。",
+            dinner: {
+                category: "DINNER", title: "蔬菜串燒 Naruto ya", 
+                bloggerTip: "<b>導遊小撇步：</b>這家店主打<b>生菜肉捲 (レタス巻き)</b> 必點！口感清爽完全不油膩。我們 6 個人已預約好，外套可以收在椅子下避免沾到味道。",
                 list: [
-                    { main: "大正大國藥妝", sub: "就在車站出口，建議回民宿前順手補貨免排隊" },
-                    { main: "Tugboat Taisho", sub: "超熱門水上貨櫃市集，拍照聖地" },
-                    { main: "入住拍照", sub: "行李整齊放置玄關後拍照傳給房東確認" }
-                ], map: "https://goo.gl/maps/A6p8i3vF6u65jD6b7"
+                    { main: "生菜肉捲 (必點)", sub: "人氣第一，清甜豬肉與爽脆生菜" },
+                    { main: "半熟卵肉捲", sub: "切開後蛋黃流出的視覺效果超棒" }
+                ], map: "https://app.goo.gl/zL6v7"
             }
         };
 
         const timeline = [
             { time: "06:40", title: "星宇 IT210 出發", key: "flight", label: "FLIGHT" },
             { time: "12:00", title: "午餐：Shake Shack", key: "lunch", label: "FOOD" },
-            { time: "14:00", title: "百貨商圈深度逛", key: "shopping", label: "SHOPPING" },
-            { time: "18:00", title: "抵達大正民宿", key: "hotel", label: "ACCOMMODATION" }
+            { time: "14:00", title: "心齋橋商圈全攻略", key: "shopping", label: "GUIDE" },
+            { time: "17:30", title: "蔬菜串燒 Narutoya", key: "dinner", label: "RESERVATION" }
         ];
 
         function renderTimeline() {
@@ -151,7 +151,7 @@
                     <div class="item-time">${i.time}</div>
                     <div class="item-content">
                         <span class="item-label">${i.label}</span>
-                        <h2 class="item-title">${i.title}</h2>
+                        <h2 class="item-title">${i.title} ${i.key==='dinner'?'<span class="stamp">預約済</span>':''}</h2>
                     </div>
                 </div>
             `).join('');
