@@ -1,0 +1,13 @@
+{
+  "name": "大阪5天4夜旅遊小工具",
+  "short_name": "大阪2026",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#7C8B99",
+  "icons": [{
+    "src": "https://cdn-icons-png.flaticon.com/512/197/197604.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }]
+}
