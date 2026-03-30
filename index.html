@@ -2,93 +2,218 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🇯🇵 大阪 2026 旅遊助手</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>小陳旅行社 大阪五天四夜</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        :root { --bg: #FDFCF8; --text: #4A4A4A; --primary: #8E9775; --accent: #E28E8E; --card: #FFFFFF; }
-        body { font-family: "PingFang TC", sans-serif; background: var(--bg); margin: 0; padding: 15px; color: var(--text); padding-bottom: 80px; }
-        .day-box { background: var(--card); border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        h2 { color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 5px; font-size: 1.2rem; }
-        .event { margin-bottom: 12px; padding: 8px; border-left: 4px solid var(--primary); background: #fcfcfc; }
-        .tag { font-size: 11px; padding: 2px 6px; border-radius: 5px; margin-right: 5px; color: white; font-weight: bold; }
-        .tag-food { background: #E28E8E; } /* 必吃美食 */
-        .tag-buy { background: #8DA9C4; } /* 必買清單 */
-        .tag-memo { background: #FFB37E; } /* 預約/提醒 */
-        .tag-trans { background: #7C8B99; } /* 交通 */
-        .btn-nav { display: inline-block; background: #8E9775; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 13px; margin-top: 5px; }
-        .tab-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; border-top: 1px solid #EEE; padding: 10px 0; z-index: 1000; }
-        .tab-item { flex: 1; text-align: center; font-size: 12px; color: #888; }
-        .highlight { font-weight: bold; color: #D64545; }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
-        th, td { border: 1px solid #EEE; padding: 8px; text-align: left; }
-        th { background: #F9F9F9; }
+        :root { 
+            --bg: #F9F7F2; 
+            --card: #FFFFFF;
+            --primary: #5A6456; 
+            --accent: #C88F8F; 
+            --text: #444;
+            --tag-food: #FDEBD0;
+            --tag-buy: #D6EAF8;
+            --tag-memo: #FADBD8;
+        }
+        body { font-family: "PingFang TC", "Hiragino Sans GB", sans-serif; background: var(--bg); margin: 0; color: var(--text); -webkit-font-smoothing: antialiased; }
+        
+        .nav-header { position: sticky; top: 0; background: rgba(249, 247, 242, 0.95); backdrop-filter: blur(10px); padding: 15px 10px; z-index: 1000; border-bottom: 1px solid #EDEAE3; text-align: center; }
+        h1 { font-size: 1.2rem; color: var(--primary); margin: 0 0 15px 0; letter-spacing: 1px; }
+        
+        .nav-tabs { display: flex; overflow-x: auto; gap: 8px; scrollbar-width: none; padding-bottom: 5px; }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+        .tab-btn { padding: 8px 18px; background: #EEEBE3; border-radius: 20px; font-size: 13px; font-weight: 500; border: none; white-space: nowrap; color: #888; transition: 0.3s; }
+        .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(90, 100, 86, 0.2); }
+
+        .container { padding: 15px; padding-bottom: 80px; }
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: var(--card); border-radius: 18px; padding: 18px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border: 1px solid #F0EFEA; }
+        .card-title { font-size: 1.1rem; font-weight: 600; color: var(--primary); margin: 0 0 10px 0; }
+        .time-label { font-size: 12px; color: #999; margin-bottom: 8px; display: block; letter-spacing: 1px; }
+        
+        .event-item { margin-bottom: 18px; padding-bottom: 15px; border-bottom: 1px solid #F9F7F2; position: relative; }
+        .event-item:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
+        
+        .tag { font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 700; margin-right: 5px; vertical-align: middle; }
+        .tag-food { background: #FDEBD0; color: #B9770E; }
+        .tag-buy { background: #D6EAF8; color: #2E86C1; }
+        .tag-memo { background: #FADBD8; color: #CB4335; }
+
+        .btn-map { display: inline-flex; align-items: center; gap: 5px; background: #F4F2ED; color: var(--primary); padding: 8px 15px; border-radius: 12px; text-decoration: none; font-size: 13px; font-weight: 600; margin-top: 10px; border: 1px solid #E5E2D9; }
+        
+        .important-box { background: #FFF5F5; border: 1px solid #FFE4E4; border-radius: 12px; padding: 12px; color: #D64545; font-size: 13px; margin: 10px 0; line-height: 1.5; }
+        .weather-info { font-size: 12px; color: #777; margin-bottom: 15px; text-align: center; font-style: italic; }
     </style>
 </head>
 <body>
-    <h1>🇯🇵 大阪·京都行程表</h1>
 
-    <div class="day-box" style="background: #f0f4f0;">
-        <h3>📍 住宿資訊 [cite: 8, 12]</h3>
-        <p><strong>日居大正一号館</strong><br>
-        <a href="https://app.goo.gl/yYvP3" class="btn-nav">開啟住宿導航 🏠</a></p>
-        <h3>✈️ 航班資訊 [cite: 4, 190]</h3>
-        <p>去程: 4/14 06:40 IT210 [cite: 6]<br>回程: 4/18 19:00前抵達 KIX T1 [cite: 191]</p>
-    </div>
-
-    <div class="day-box">
-        <h2>Day 1: 心齋橋攻略 [cite: 9]</h2>
-        <div class="event">
-            <span class="tag tag-food">必吃美食</span> <span class="highlight">Shake Shack 漢堡</span> (大丸百貨 1F) [cite: 18, 20]
-        </div>
-        <div class="event">
-            <span class="tag tag-memo">重要預約</span> 17:30 <span class="highlight">蔬菜串燒 Narutoya</span> [cite: 26]
-            <br><a href="https://app.goo.gl/zL6v7" class="btn-nav">開啟導航 📍</a>
-        </div>
-        <div class="event">
-            <span class="tag tag-buy">必買清單</span> 吉伊卡哇land、寶可夢中心 [cite: 22, 23]
+    <div class="nav-header">
+        <h1>小陳旅行社 大阪五天四夜</h1>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchPage('day1', this)">Day 1</button>
+            <button class="tab-btn" onclick="switchPage('day2', this)">Day 2</button>
+            <button class="tab-btn" onclick="switchPage('day3', this)">Day 3</button>
+            <button class="tab-btn" onclick="switchPage('day4', this)">Day 4</button>
+            <button class="tab-btn" onclick="switchPage('day5', this)">Day 5</button>
+            <button class="tab-btn" onclick="switchPage('tools', this)">🧳 工具箱</button>
         </div>
     </div>
 
-    <div class="day-box">
-        <h2>Day 2: 環球影城攻略 [cite: 34]</h2>
-        <div class="event">
-            <span class="tag tag-memo">快速通關</span> 已訂門票與快通 [cite: 38, 39]
+    <div class="container">
+        
+        <div id="day1" class="page active">
+            <div class="weather-info">☁️ 預計天氣：14°C - 21°C 多雲時晴</div>
+            <div class="card">
+                <span class="time-label">ARRIVAL & SHINSAIBASHI</span>
+                <div class="event-item">
+                    <span class="tag tag-memo">航班</span> 06:40 IT210 起飛 → 10:24 抵達 KIX [cite: 6, 7]
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-memo">住宿</span> <strong>日居大正一号館</strong> [cite: 8]
+                    <br><small>⚠️ 務必拍照回傳玄關行李照給房東 [cite: 16]</small>
+                    <br><a href="https://app.goo.gl/yYvP3" class="btn-map">📍 開啟地圖導航 [cite: 15]</a>
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-food">午餐</span> Shake Shack 大丸心齋橋店 [cite: 18]
+                    <br><a href="https://app.goo.gl/xS7D" class="btn-map">📍 餐廳位置 [cite: 20]</a>
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-buy">購物</span> 大丸百貨 (寶可夢中心)、PARCO (吉伊卡哇land) [cite: 22, 23]
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-memo">預約</span> 17:30 <strong>蔬菜串燒 Naruto ya</strong> [cite: 26]
+                    <br><a href="https://app.goo.gl/zL6v7" class="btn-map">📍 餐廳位置 [cite: 28]</a>
+                </div>
+            </div>
         </div>
-        <div class="event">
-            <span class="tag tag-food">必點菜單</span> <span class="highlight">賽利亞納食堂貓飯</span>、奶油啤酒 [cite: 51, 67]
-        </div>
-        <div class="event">
-            <span class="tag tag-buy">必買清單</span> 無敵星星爆米花桶、提姆熊髮箍 [cite: 60, 78]
-        </div>
-    </div>
 
-    <div class="day-box">
-        <h2>💡 導遊小工具</h2>
-        <p><strong>🛍️ 退稅提醒 [cite: 90]：</strong>
-        需護照正本 [cite: 91]、收據 [cite: 92]、商品包裝完整 [cite: 93]。</p>
-        <p><strong>🚌 京都公車禮儀 [cite: 105]：</strong>
-        勿大聲喧嘩 [cite: 106]、記得按下車鈴 [cite: 107, 108]、從後門上車 [cite: 111]。</p>
-        <h3>💰 簡易預算表</h3>
-        <table>
-            <tr><th>項目</th><th>預估金額 (日圓)</th></tr>
-            <tr><td>飯店餘額</td><td>-</td></tr>
-            <tr><td>USJ 購物</td><td>-</td></tr>
-            <tr><td>美食餐費</td><td>-</td></tr>
-        </table>
-    </div>
+        <div id="day2" class="page">
+            <div class="weather-info">☀️ 預計天氣：15°C - 23°C 晴朗</div>
+            <div class="card">
+                <span class="time-label">UNIVERSAL STUDIOS JAPAN</span>
+                <div class="event-item">
+                    <span class="tag tag-memo">重點</span> 日本環球影城 (USJ) [cite: 35]
+                    <br><small>💡 11:00-12:00 任天堂園區預約 [cite: 53]</small>
+                    <br><a href="https://app.goo.gl/tU5J" class="btn-map">📍 USJ 導航 [cite: 42, 47]</a>
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-food">必吃</span> 賽利亞納食堂「超真實貓飯」[cite: 52]
+                    <br><span class="tag tag-food">必喝</span> 奶油啤酒、哈利波特三根掃帚餐廳 [cite: 66, 67]
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-buy">必買</span> 無敵星星爆米花桶、周年紀念手環 [cite: 60, 62]
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-food">晚餐</span> 燒肉內臟 Tokuchan 野田店 [cite: 96]
+                    <br><a href="https://app.goo.gl/97N" class="btn-map">📍 餐廳位置 [cite: 97]</a>
+                </div>
+            </div>
+        </div>
 
-    <div class="tab-bar">
-        <div class="tab-item">🏠<br>主頁</div>
-        <div class="tab-item">🗓️<br>行程</div>
-        <div class="tab-item">💵<br>記帳</div>
-        <div class="tab-item">📞<br>緊急</div>
+        <div id="day3" class="page">
+            <div class="weather-info">⛩️ 預計天氣：12°C - 19°C 晴時多雲</div>
+            <div class="card">
+                <span class="time-label">KYOTO TRADITION</span>
+                <div class="event-item">
+                    <span class="tag tag-memo">預約</span> 11:00 敘敘苑 JR京都伊勢丹店 [cite: 117]
+                    <br><a href="https://app.goo.gl/jjo" class="btn-map">📍 餐廳位置 [cite: 119]</a>
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-memo">景點</span> <strong>下鴨神社</strong> [cite: 122]
+                    <br><span class="tag tag-buy">必買</span> 蕾絲御守、媛守 (祈求變美) [cite: 126, 128]
+                    <br><a href="maps.google.com" class="btn-map">📍 神社導航 [cite: 125]</a>
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-food">晚餐</span> 京都 かに銀 河原町店 (螃蟹料理) [cite: 135]
+                    <br><a href="https://app.goo.gl/kng" class="btn-map">📍 餐廳位置 [cite: 138]</a>
+                </div>
+                <div class="important-box">
+                    🚌 <strong>京都巴士禮儀</strong>：<br>
+                    1. 保持安靜，勿大聲喧嘩 [cite: 106]<br>
+                    2. 下車記得按下車鈴 [cite: 107]<br>
+                    3. 由後門上車，前門感應/付費下車 [cite: 111]
+                </div>
+            </div>
+        </div>
+
+        <div id="day4" class="page">
+            <div class="weather-info">♨️ 預計天氣：16°C - 22°C 晴</div>
+            <div class="card">
+                <span class="time-label">MARKET & RELAXATION</span>
+                <div class="event-item">
+                    <span class="tag tag-food">早餐</span> <strong>木津市場</strong> (海鮮與水果) [cite: 150]
+                    <br><a href="maps.google.com" class="btn-map">📍 市場位置 [cite: 153]</a>
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-memo">療癒</span> LOUTRE 水獺咖啡廳 (14:00 營業) [cite: 155, 158]
+                    <br><a href="maps.google.com" class="btn-map">📍 咖啡廳位置 [cite: 157]</a>
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-food">晚餐</span> <strong>天星 (天婦羅)</strong> [cite: 160]
+                    <div class="important-box">
+                        ⚠️ <strong>服裝規定</strong>：禁止穿著短褲、拖鞋、涼鞋、運動服、T恤或吊帶背心 [cite: 164]。
+                    </div>
+                    <a href="https://app.goo.gl/tsb" class="btn-map">📍 餐廳位置 [cite: 163]</a>
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-memo">夜間</span> 空庭溫泉 (營業至 23:00) [cite: 166]
+                    <br><a href="https://app.goo.gl/k庭" class="btn-map">📍 溫泉導航 [cite: 169]</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="day5" class="page">
+            <div class="weather-info">✈️ 預計天氣：15°C - 20°C 晴朗</div>
+            <div class="card">
+                <span class="time-label">OUTLET & GOODBYE</span>
+                <div class="event-item">
+                    <span class="tag tag-food">午餐</span> うなぎの中庄 鰻魚飯 [cite: 182]
+                    <br><a href="https://app.goo.gl/nak" class="btn-map">📍 餐廳位置 [cite: 185]</a>
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-memo">行程</span> 13:00 包車前往 <strong>臨空城 OUTLET</strong> [cite: 186, 187]
+                    <br><a href="https://app.goo.gl/rku" class="btn-map">📍 Outlet 導航 [cite: 189]</a>
+                </div>
+                <div class="event-item">
+                    <span class="tag tag-memo">返程</span> 17:00 抵達 KIX T1 → 19:15 IT213 起飛 [cite: 191]
+                    <br><a href="https://app.goo.gl/kix" class="btn-map">📍 機場導航 [cite: 196]</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="tools" class="page">
+            <div class="card">
+                <div class="card-title">🛂 退稅與清單</div>
+                <p><strong>退稅地點</strong>：USJ Studio Gifts (入口處) [cite: 90]</p>
+                <p><strong>必帶文件</strong>：護照正本 (影本不可)、購物收據、未使用商品 [cite: 91, 92, 93]</p>
+            </div>
+            <div class="card">
+                <div class="card-title">💰 預算備忘錄</div>
+                <p>1. 住宿尾款 (日幣/現金)</p>
+                <p>2. 各餐預約保證金/尾款</p>
+                <p>3. 交通卡 (ICOCA/Suica) 加值</p>
+            </div>
+            <div class="card">
+                <div class="card-title">📞 緊急聯絡</div>
+                <p>駐日代表處：+81-3-3280-7811</p>
+                <p>外交部緊急連絡：0800-085-095</p>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // 註冊 Service Worker 讓它像 App 一樣運行
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
+        function switchPage(pageId, btn) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
